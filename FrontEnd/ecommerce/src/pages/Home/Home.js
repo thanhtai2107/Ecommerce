@@ -1,0 +1,254 @@
+import { Link } from "react-router-dom";
+import Marquee from "react-fast-marquee";
+import BlogCard from "../../components/BlogCard/BlogCard";
+
+function Home() {
+  return (
+    <>
+      <section className="home-wrapper-1 py-5">
+        <div className="container-xl">
+          <div className="row">
+            <div className="col-6">
+              <div className="main-banner position-relative p-3">
+                <img
+                  src="images/main-banner-1.jpg"
+                  className="img-fluid rounded-3"
+                  alt="main-banner"
+                ></img>
+                <div className="main-banner-content position-absolute">
+                  <h5>SUPERCHARGED FOR PROS</h5>
+                  <h6>IPad S13+ Pro</h6>
+                  <p>From $999.00 or $41.62/mo</p>
+                  <Link className="button">BUY NOW</Link>
+                </div>
+              </div>
+            </div>
+            <div className="col-6">
+              <div className="d-flex flex-wrap gap-10 align-items-center p-3">
+                <div className="small-banner position-relative">
+                  <img
+                    src="images/catbanner-01.jpg"
+                    className="img-fluid rounded-3"
+                    alt="main-banner"
+                  ></img>
+                  <div className="small-banner-content position-absolute">
+                    <h5>BEST SALE</h5>
+                    <h6>Ipad S13+ Pro</h6>
+                    <p>
+                      From $999.00 or
+                      <br /> $41.62/mo
+                    </p>
+                  </div>
+                </div>
+                <div className="small-banner position-relative">
+                  <img
+                    src="images/catbanner-02.jpg"
+                    className="img-fluid rounded-3"
+                    alt="main-banner"
+                  ></img>
+                  <div className="small-banner-content position-absolute">
+                    <h5>NEW ARRIVAL</h5>
+                    <h6>But IPad Air</h6>
+                    <p>
+                      From $999.00 or <br />
+                      $41.62/mo
+                    </p>
+                  </div>
+                </div>
+                <div className="small-banner position-relative ">
+                  <img
+                    src="images/catbanner-03.jpg"
+                    className="img-fluid rounded-3"
+                    alt="main-banner"
+                  ></img>
+                  <div className="small-banner-content position-absolute">
+                    <h5>NEW ARRIVAL</h5>
+                    <h6>Ipad S13+ Pro</h6>
+                    <p>
+                      From $999.00 or <br />
+                      $41.62/mo
+                    </p>
+                  </div>
+                </div>
+                <div className="small-banner position-relative ">
+                  <img
+                    src="images/catbanner-04.jpg"
+                    className="img-fluid rounded-3"
+                    alt="main-banner"
+                  ></img>
+                  <div className="small-banner-content position-absolute">
+                    <h5>NEW ARRIVAL</h5>
+                    <h6>But IPad Air</h6>
+                    <p>
+                      From $999.00 or <br />
+                      $41.62/mo
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="home-wrapper-2 py-2 my-5">
+        <div className="container-xxl">
+          <div className="row">
+            <div className="col-12">
+              <div className="services d-flex justify-content-between align-items-center gap-10">
+                <div className="d-flex align-items-center gap-10">
+                  <img alt="service" src="images/service.png" />
+                  <div>
+                    <h6>Free Shipping</h6>
+                    <p>From all orders over $100</p>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center gap-10">
+                  <img alt="service" src="images/service-02.png" />
+                  <div>
+                    <h6>Daily Suprise Offers</h6>
+                    <p>Save up to 25%</p>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center gap-10">
+                  <img alt="service" src="images/service-03.png" />
+                  <div>
+                    <h6>Support 24/7</h6>
+                    <p>Shop with an expert</p>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center gap-10">
+                  <img alt="service" src="images/service-04.png" />
+                  <div>
+                    <h6>Affordable Price</h6>
+                    <p>Get factory direct price</p>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center gap-10">
+                  <img alt="service" src="images/service-05.png" />
+                  <div>
+                    <h6>Secure Payment</h6>
+                    <p>100% Protected Payment</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="home-wrapper-2 py-5">
+        <div className="container-xl">
+          <div className="row">
+            <div className="col-12">
+              <div className="categories d-flex flex-wrap align-item-center justify-content-between">
+                <div className="d-flex gap align-items-center">
+                  <div>
+                    <h6>Music & Gaming</h6>
+                    <p>10 Items</p>
+                  </div>
+                  <img src="images/camera.jpg" alt="camera" />
+                </div>
+                <div className="d-flex gap align-items-center">
+                  <div>
+                    <h6>Camera</h6>
+                    <p>10 Items</p>
+                  </div>
+                  <img src="images/camera.jpg" alt="camera" />
+                </div>
+                <div className="d-flex gap align-items-center">
+                  <div>
+                    <h6>Smart TV</h6>
+                    <p>10 Items</p>
+                  </div>
+                  <img src="images/tv.jpg" alt="camera" />
+                </div>
+                <div className="d-flex gap align-items-center">
+                  <div>
+                    <h6>Smart Watch</h6>
+                    <p>10 Items</p>
+                  </div>
+                  <img src="images/headphone.jpg" alt="camera" />
+                </div>
+                <div className="d-flex gap align-items-center">
+                  <div>
+                    <h6>Music & Gaming</h6>
+                    <p>10 Items</p>
+                  </div>
+                  <img src="images/camera.jpg" alt="camera" />
+                </div>
+                <div className="d-flex gap align-items-center">
+                  <div>
+                    <h6>Camera</h6>
+                    <p>10 Items</p>
+                  </div>
+                  <img src="images/camera.jpg" alt="camera" />
+                </div>
+                <div className="d-flex gap align-items-center">
+                  <div>
+                    <h6>Smart TV</h6>
+                    <p>10 Items</p>
+                  </div>
+                  <img src="images/tv.jpg" alt="camera" />
+                </div>
+                <div className="d-flex gap align-items-center">
+                  <div>
+                    <h6>Smart Watch</h6>
+                    <p>10 Items</p>
+                  </div>
+                  <img src="images/headphone.jpg" alt="camera" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="marquee-wrapper py-5">
+        <div className="container-xl">
+          <div className="row">
+            <div className="col-12">
+              <div className="marquee-inner-wrapper card-wrapper">
+                <Marquee className="d-flex h-75">
+                  <div className="mx-4 w-25 h-50">
+                    <img src="images/brand-01.png" alt="brand" />
+                  </div>
+                  <div className="mx-4 w-25 h-50">
+                    <img src="images/brand-02.png" alt="brand" />
+                  </div>
+                  <div className="mx-4 w-25 h-50">
+                    <img src="images/brand-03.png" alt="brand" />
+                  </div>
+                  <div className="mx-4 w-25 h-50">
+                    <img src="images/brand-04.png" alt="brand" />
+                  </div>
+                  <div className="mx-4 w-25 h-50">
+                    <img src="images/brand-05.png" alt="brand" />
+                  </div>
+                  <div className="mx-4 w-25 h-50">
+                    <img src="images/brand-06.png" alt="brand" />
+                  </div>
+                  <div className="mx-4 w-25 h-50">
+                    <img src="images/brand-07.png" alt="brand" />
+                  </div>
+                  <div className="mx-4 w-25 h-50">
+                    <img src="images/brand-08.png" alt="brand" />
+                  </div>
+                </Marquee>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="blog-wrapper py-5 home-wrapper">
+        <div className="container-xl">
+          <div className="row">
+            <BlogCard />
+            <BlogCard />
+            <BlogCard />
+            <BlogCard />
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
+export default Home;
