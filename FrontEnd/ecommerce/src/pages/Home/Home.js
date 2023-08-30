@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import BlogCard from "../../components/BlogCard/BlogCard";
+import ProductCard from "../../components/ProductCard/ProductCard";
+import SpecialProduct from "../../components/SpecialProduct/SpecialProduct";
 
 function Home() {
   return (
@@ -201,6 +203,34 @@ function Home() {
           </div>
         </div>
       </section>
+      <section className="featured-wrapper py-5 home-wrapper-2">
+        <div className="container-xl">
+          <div className="row">
+            <div className="col-12">
+              <h3 className="section-heading">Featured Collection</h3>
+            </div>
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+          </div>
+        </div>
+      </section>
+      <section className="special-wrapper py-5 home-wrapper-2">
+        <div className="container-xl">
+          <div className="row">
+            <div className="col-12">
+              <h3 className="section-heading">Special Products</h3>
+            </div>
+          </div>
+          <div className="row">
+            <SpecialProduct />
+            <SpecialProduct />
+            <SpecialProduct />
+            <SpecialProduct />
+          </div>
+        </div>
+      </section>
       <section className="marquee-wrapper py-5">
         <div className="container-xl">
           <div className="row">
@@ -237,9 +267,13 @@ function Home() {
           </div>
         </div>
       </section>
-      <section className="blog-wrapper py-5 home-wrapper">
+
+      <section className="blog-wrapper py-5 home-wrapper-2">
         <div className="container-xl">
           <div className="row">
+            <div className="col-12">
+              <h3 className="section-heading">Our Blog</h3>
+            </div>
             <BlogCard />
             <BlogCard />
             <BlogCard />
