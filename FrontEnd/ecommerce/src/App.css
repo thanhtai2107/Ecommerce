@@ -330,4 +330,34 @@ footer .input-group-text {
   background-color: var(--color-ef3939);
 }
 /*Special product end*/
-/*Home part end*/
+
+/*Famous card*/
+.famous-card img {
+  border-radius: 10px;
+}
+.famous-card .famous-content {
+  top: 10%;
+  left: 5%;
+}
+.famous-card .famous-content h5 {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 300px;
+  color: white;
+  margin-bottom: 7px;
+  text-transform: uppercase;
+}
+.famous-card .famous-content h6 {
+  font-size: 22px;
+  line-height: 30px;
+  font-weight: 500;
+  color: white;
+}
+.famous-card .famous-content p {
+  font-size: 12px;
+  line-height: 24px;
+  font-weight: 100;
+  color: white;
+}
+/*Famous card end here*/
+/*Home part end here*/
