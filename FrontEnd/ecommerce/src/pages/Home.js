@@ -209,10 +209,20 @@ function Home() {
             <div className="col-12">
               <h3 className="section-heading">Featured Collection</h3>
             </div>
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+            <div className="row">
+              <div className="col-3">
+                <ProductCard />
+              </div>
+              <div className="col-3">
+                <ProductCard />
+              </div>
+              <div className="col-3">
+                <ProductCard />
+              </div>
+              <div className="col-3">
+                <ProductCard />
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -350,10 +360,20 @@ function Home() {
             <div className="col-12">
               <h3 className="section-heading">Our Blog</h3>
             </div>
-            <BlogCard />
-            <BlogCard />
-            <BlogCard />
-            <BlogCard />
+            <div className="row">
+              <div className="col-3">
+                <BlogCard />
+              </div>
+              <div className="col-3">
+                <BlogCard />
+              </div>
+              <div className="col-3">
+                <BlogCard />
+              </div>
+              <div className="col-3">
+                <BlogCard />
+              </div>
+            </div>
           </div>
         </div>
       </section>
