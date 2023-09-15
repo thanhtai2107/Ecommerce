@@ -1,10 +1,4 @@
-import {
-  BsFacebook,
-  BsGithub,
-  BsInstagram,
-  BsLinkedin,
-  BsYoutube,
-} from "react-icons/bs";
+import { BsGithub, BsInstagram, BsLinkedin, BsYoutube } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
 function Footer() {

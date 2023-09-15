@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import Marquee from "react-fast-marquee";
-import BlogCard from "../../components/BlogCard/BlogCard";
-import ProductCard from "../../components/ProductCard/ProductCard";
-import SpecialProduct from "../../components/SpecialProduct/SpecialProduct";
+import BlogCard from "../components/BlogCard";
+import ProductCard from "../components/ProductCard";
+import SpecialProduct from "../components/SpecialProduct";
 
 function Home() {
   return (

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 function BreadCrumb(props) {
   const { title } = props;
   return (
-    <div className="breadcrumb py-4">
+    <div className="breadcrumb py-4 mb-0">
       <div className="container-xl">
         <div className="row">
           <div className="col-12">
@@ -10,7 +10,7 @@ function BreadCrumb(props) {
               <Link to="/" className="text-dark">
                 Home &nbsp;
               </Link>
-              /{title}
+              / {title}
             </p>
           </div>
         </div>

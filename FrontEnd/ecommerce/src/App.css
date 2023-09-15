@@ -277,6 +277,7 @@ footer .input-group-text {
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
+  width: 100%;
 }
 .product-card .wishlist {
   top: 6px;
@@ -306,7 +307,7 @@ footer .input-group-text {
   color: var(--color-1c1c1b);
   font-size: 15px;
 }
-.product-card .product-details p {
+.product-card .product-details .price {
   color: var(--color-1c1c1b);
   font-size: 16px;
 }
@@ -317,6 +318,13 @@ footer .input-group-text {
 .product-card:hover .action-bar {
   right: 15px;
   transition: 0.4s;
+}
+.product-card .description {
+  font-size: 13px;
+  color: var(--color-777777);
+  margin-top: 5px;
+  display: none;
+  margin-right: 20px;
 }
 /*Product card end*/
 
@@ -361,3 +369,104 @@ footer .input-group-text {
 }
 /*Famous card end here*/
 /*Home part end here*/
+
+/* Our store begin*/
+.filter-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px 15px 25px;
+}
+.filter-title {
+  font-size: 16px;
+  line-height: 29px;
+  font-weight: 600;
+  color: var(--color-1c1c1b);
+}
+.filter-card ul,
+.form-check-label {
+  padding-left: 10px;
+  list-style: none;
+  font-size: 13px;
+  line-height: 30px;
+  color: var(--color-777777);
+  cursor: pointer;
+}
+.form-check-input:hover {
+  cursor: pointer;
+}
+.form-check-input:focus {
+  cursor: pointer;
+  box-shadow: none;
+  border-color: rgba(0, 0, 0, 0.25);
+}
+.form-check-input:checked {
+  background-color: var(--color-febd69);
+  border-color: var(--color-febd69);
+}
+.sub-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-1c1c1b);
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+.colors {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.colors li {
+  background-color: red;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+}
+.filter-sort-grid {
+  padding: 10px;
+  background-color: white;
+  border-radius: 10px;
+}
+.grid img {
+  width: 35px;
+  height: 35px;
+  background-color: #f2f2f2;
+  padding: 8px;
+  border-radius: 3px;
+}
+.gr-12 {
+  width: 100%;
+}
+.gr-6 {
+  width: 49%;
+}
+.gr-4 {
+  width: 32%;
+}
+.gr-3 {
+  width: 24%;
+}
+.gr-12 .product-card {
+  display: flex;
+  gap: 20px;
+}
+.gr-12 .product-card .product-image {
+  width: 270px;
+}
+.gr-12 .product-card .product-image {
+  height: auto;
+}
+.gr-12 .action-bar {
+  top: 13%;
+}
+.gr-12 .description {
+  display: block;
+}
+.gr-6 .product-image {
+  width: 100%;
+}
+.gr-6 .product-image img {
+  margin: auto;
+  display: block;
+}
+/* Our store end*/
