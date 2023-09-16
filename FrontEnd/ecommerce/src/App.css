@@ -498,3 +498,45 @@ footer .input-group-text {
   list-style: none;
 }
 /* Contact end*/
+/* Wishlist begin*/
+.wishlist-card .cross {
+  width: 20px;
+  height: 20px;
+  top: 10px;
+  right: 10px;
+}
+.wishlist-card .cross:hover {
+  cursor: pointer;
+}
+.wishlist-card h5.title {
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 500;
+  color: var(--color-1c1c1b);
+}
+.wishlist-card h6 {
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 500;
+}
+/* Wishlist end*/
+/*Login begin*/
+.login-form {
+  background-color: white;
+  width: 450px;
+  margin: 20px auto;
+  padding: 30px 30px;
+  border-radius: 20px;
+}
+.login-form .form-control {
+  height: 50px;
+  background-color: var(--color-f5f5f7);
+  border-color: transparent;
+  font-size: 14px;
+  border-radius: 10px;
+}
+.login-form .forgot-password {
+  color: var(--color-1c1c1b);
+  font-size: 15px;
+}
+/*Login end*/

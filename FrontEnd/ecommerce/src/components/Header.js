@@ -54,7 +54,10 @@ function Header() {
                   </Link>
                 </div>
                 <div>
-                  <Link className="d-flex align-items-center gap-10 text-white">
+                  <Link
+                    to="/wishlist"
+                    className="d-flex align-items-center gap-10 text-white"
+                  >
                     <img alt="wishlist" src="images/wishlist.svg" />
                     <p>
                       Favourite <br /> WishList
@@ -62,7 +65,10 @@ function Header() {
                   </Link>
                 </div>
                 <div>
-                  <Link className="d-flex align-items-center gap-10 text-white">
+                  <Link
+                    to="/login"
+                    className="d-flex align-items-center gap-10 text-white"
+                  >
                     <img alt="user" src="images/user.svg" />
                     <p>
                       Login <br /> My Account
