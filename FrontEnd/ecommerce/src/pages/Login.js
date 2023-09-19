@@ -27,11 +27,13 @@ function Login() {
                       className="form-control"
                     />
                   </div>
-                  <Link className="forgot-password">
+                  <Link to="/forgot-password" className="forgot-password">
                     <p className="m-2">Forgot your password?</p>
                   </Link>
                   <div className="d-flex gap-10 justify-content-center align-items-center mt-3">
-                    <button className="button">Login</button>
+                    <button className="button" type="submit">
+                      Login
+                    </button>
                     <Link to="/register">
                       <button className="button">Sign up</button>
                     </Link>
