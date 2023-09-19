@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 function BlogCard() {
   return (
-    <div className="blotg-card">
+    <div className="blog-card">
       <div className="card-image">
         <img
           className="img-fluid w-100"
@@ -16,7 +16,9 @@ function BlogCard() {
           Lorem ipsum dolor sit amet consecteture adipisicing elit. Atque
           quaerat accusumus official
         </p>
-        <Link className="button">Read more</Link>
+        <Link to="/blog/:id" className="button">
+          Read more
+        </Link>
       </div>
     </div>
   );
