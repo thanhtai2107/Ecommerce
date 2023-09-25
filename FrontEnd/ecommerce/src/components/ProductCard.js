@@ -6,7 +6,7 @@ function ProductCard(props) {
   return (
     <>
       <div
-        className={`${(location.pathname = "/ourstore"
+        className={`${(location.pathname = "/product"
           ? `gr-${grid}`
           : "col-3")}`}
       >

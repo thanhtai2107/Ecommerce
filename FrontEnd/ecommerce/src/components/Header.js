@@ -28,16 +28,16 @@ function Header() {
               </h2>
             </div>
             <div className="col-5 d-flex align-items-center">
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Search product..."
                   aria-label="Search product..."
                   aria-describedby="basic-addon2"
                 />
-                <div class="input-group-append">
-                  <span class="input-group-text h-100" id="basic-addon2">
+                <div className="input-group-append">
+                  <span className="input-group-text h-100" id="basic-addon2">
                     <BsSearch />
                   </span>
                 </div>
@@ -98,9 +98,9 @@ function Header() {
             <div className="col-12">
               <div className="menu-bottom d-flex align-items-center gap-30">
                 <div>
-                  <div class="dropdown">
+                  <div className="dropdown">
                     <button
-                      class="btn btn-secondary dropdown-toggle bg-transparent border-0 d-flex gap-10 align-items-center"
+                      className="btn btn-secondary dropdown-toggle bg-transparent border-0 d-flex gap-10 align-items-center"
                       type="button"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
@@ -108,7 +108,7 @@ function Header() {
                       <img alt="" src="images/menu.svg" />
                       <span>Show Categories</span>
                     </button>
-                    <ul class="dropdown-menu">
+                    <ul className="dropdown-menu">
                       <li>
                         <Link className="dropdown-item text-white" to="">
                           Action
@@ -130,7 +130,7 @@ function Header() {
                 <div className="menu-link">
                   <div className="d-flex align-items-center gap-15">
                     <NavLink to="/">Home</NavLink>
-                    <NavLink to="/ourstore">Our store</NavLink>
+                    <NavLink to="/product">Our store</NavLink>
                     <NavLink to="/blog">Blog</NavLink>
                     <NavLink to="/contact">Contact</NavLink>
                   </div>

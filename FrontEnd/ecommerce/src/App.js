@@ -14,6 +14,7 @@ import ResetPassword from "./pages/ResetPassword";
 import SingleBlog from "./pages/SingleBlog";
 import SingleProduct from "./pages/SingleProduct";
 import Cart from "./pages/Cart";
+import CheckOut from "./pages/CheckOut";
 
 function App() {
   return (
@@ -24,9 +25,10 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/ourstore" element={<OurStore />} />
+            <Route path="/product" element={<OurStore />} />
             <Route path="/product/:id" element={<SingleProduct />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<CheckOut />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:id" element={<SingleBlog />} />
             <Route path="/wishlist" element={<Wishlist />} />
