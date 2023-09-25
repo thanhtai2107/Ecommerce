@@ -6,14 +6,9 @@ import ProductCard from "../components/ProductCard";
 import Zoom from "react-img-zoom";
 import Colors from "../components/Colors";
 import { AiOutlineHeart } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 function SingleProduct() {
-  const props = {
-    width: 400,
-    height: 250,
-    zoomWidth: 500,
-    img: "jp.jpg",
-  };
   const [orderedProduct, setOrderedProduct] = useState(true);
   return (
     <>
@@ -86,7 +81,7 @@ function SingleProduct() {
                     />
                     <p>Based on 6 reviews</p>
                   </div>
-                  <a href="#review">Write a review</a>
+                  <Link to="#review">Write a review</Link>
                 </div>
                 <div className="border-bottom">
                   <div className="d-flex align-items-center gap-10 my-2">
@@ -137,10 +132,10 @@ function SingleProduct() {
                     <button className="button border-0">Add to Cart</button>
                   </div>
                   <div className="">
-                    <a href="">
+                    <Link>
                       <AiOutlineHeart className="fs-5 me-1" />
                       Add to Wishlist
-                    </a>
+                    </Link>
                   </div>
                   <div className="d-flex flex-column  gap-10 my-2">
                     <h3 className="product-heading">Shipping & Returns</h3>
@@ -217,9 +212,7 @@ function SingleProduct() {
                   </div>
                   {orderedProduct && (
                     <div>
-                      <a href="" className="text-dark">
-                        Write a review
-                      </a>
+                      <Link className="text-dark">Write a review</Link>
                     </div>
                   )}
                 </div>

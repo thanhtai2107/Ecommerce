@@ -1,6 +1,7 @@
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import { AiFillDelete } from "react-icons/ai";
+import { Link } from "react-router-dom";
 function Cart() {
   return (
     <>
@@ -62,7 +63,11 @@ function Cart() {
                   </div>
                   <p>Taxes and shipping calculated at checkout</p>
                   <div>
-                    <button className="button border-0 w-100">Check Out</button>
+                    <Link to="/checkout" className="w-100">
+                      <button className="button border-0 w-100">
+                        Check Out
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>

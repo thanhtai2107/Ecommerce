@@ -14,16 +14,16 @@ function Footer() {
               </div>
             </div>
             <div className="col-7">
-              <div class="input-group">
+              <div className="input-group">
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Your email address"
                   aria-label="Your email address"
                   aria-describedby="basic-addon2"
                 />
-                <div class="input-group-append">
-                  <span class="input-group-text h-100" id="basic-addon2">
+                <div className="input-group-append">
+                  <span className="input-group-text h-100" id="basic-addon2">
                     Subscribe
                   </span>
                 </div>

@@ -700,7 +700,31 @@ footer .input-group-text {
   color: red;
 }
 .cart-footer p,
-h4 {
+.cart-footer h4 {
   color: var(--color-777777);
 }
 /* Cart end */
+
+/* Check out begin */
+.checkout-right-data .quantities {
+  right: -10px;
+  top: -10px;
+}
+.checkout-right-data img {
+  width: 75px;
+  height: 75px;
+}
+.checkout-right-data h4.title,
+.checkout-right-data h4.price {
+  font-size: 14px;
+  color: var(--color-777777);
+}
+.checkout-right-data .total {
+  font-size: 17px;
+  color: var(--color-1c1c1b);
+}
+.checkout-right-data .total-price {
+  font-size: 16px;
+  color: #777777;
+}
+/* Check out end */
