@@ -15,6 +15,11 @@ import SingleBlog from "./pages/SingleBlog";
 import SingleProduct from "./pages/SingleProduct";
 import Cart from "./pages/Cart";
 import CheckOut from "./pages/CheckOut";
+import Admin from "./pages/Admin";
+import AdminLayout from "./components/admin/AdminLayout";
+import ProductList from "./components/admin/list/ProductList";
+import UpdateProduct from "./components/admin/update/UpdateProduct";
+import NewProduct from "./components/admin/new/NewProduct";
 
 function App() {
   return (
@@ -36,6 +41,15 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
+          </Route>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<Admin />} />
+            <Route path="/admin/productlist" element={<ProductList />} />
+            <Route path="/admin/addproduct" element={<NewProduct />} />
+            <Route
+              path="/admin/updateproduct/:id"
+              element={<UpdateProduct />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>
