@@ -1,8 +1,7 @@
 package com.example.ecommerce.dto;
 
-public record AddItemDTO(
+public record CartItemDTO(
         Long productId,
-        String size,
         int quantity,
         int price
 ) {
