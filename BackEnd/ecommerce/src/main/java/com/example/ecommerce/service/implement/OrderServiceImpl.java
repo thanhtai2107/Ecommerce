@@ -2,10 +2,12 @@ package com.example.ecommerce.service.implement;
 
 import com.example.ecommerce.entity.*;
 import com.example.ecommerce.exception.OrderException;
+import com.example.ecommerce.exception.UserException;
 import com.example.ecommerce.repositories.*;
 import com.example.ecommerce.service.CartService;
 import com.example.ecommerce.service.OrderItemService;
 import com.example.ecommerce.service.OrderService;
+import com.example.ecommerce.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,22 +20,25 @@ public class OrderServiceImpl implements OrderService {
     private final CartService cartService;
     private final OrderRepository orderRepository;
     private final AddressRepository addressRepository;
+    private final UserService userService;
     private final UserRepository userRepository;
     private final OrderItemService orderItemService;
     private final OrderItemRepository orderItemRepository;
 
-    public OrderServiceImpl( CartService cartService, OrderRepository orderRepository, AddressRepository addressRepository, UserRepository userRepository, OrderItemService orderItemService, OrderItemRepository orderItemRepository) {
+    public OrderServiceImpl(CartService cartService, OrderRepository orderRepository, AddressRepository addressRepository, UserService userService, UserRepository userRepository, OrderItemService orderItemService, OrderItemRepository orderItemRepository) {
 
         this.cartService = cartService;
         this.orderRepository = orderRepository;
         this.addressRepository = addressRepository;
+        this.userService = userService;
         this.userRepository = userRepository;
         this.orderItemService = orderItemService;
         this.orderItemRepository = orderItemRepository;
     }
 
     @Override
-    public Orders createOrder(User user, Address address) {
+    public Orders createOrder(Long userId, Address address) throws UserException {
+        User user = userService.findUserById(userId);
         address.setUser(user);
         Address address1 = addressRepository.save(address);
         user.getAddresses().add(address);
@@ -47,7 +52,6 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setPrice(cartItem.getPrice());
             orderItem.setProduct(cartItem.getProduct());
             orderItem.setQuantity(cartItem.getQuantity());
-            orderItem.setSize(cartItem.getSize());
             orderItem.setUserId(user.getId());
 
             OrderItem createdOrderItem = orderItemRepository.save(orderItem);

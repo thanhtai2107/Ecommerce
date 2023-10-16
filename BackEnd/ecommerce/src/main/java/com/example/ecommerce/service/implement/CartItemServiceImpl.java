@@ -45,22 +45,23 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public CartItem isCartItemExist(Cart cart, Product product, String size, Long userId) {
-        CartItem cartItem = cartItemRepository.isCartItemExist(cart, product, size, userId);
+    public CartItem isCartItemExist(Cart cart, Product product, Long userId) {
+        CartItem cartItem = cartItemRepository.isCartItemExist(cart, product, userId);
 
         return cartItem;
     }
 
     @Override
-    public void deleteCartItem(Long id, Long userId) throws CartItemException, UserException {
+    public String deleteCartItem(Long id, Long userId) throws CartItemException, UserException {
         CartItem cartItem = findCartItemById(id);
         User user = userService.findUserById(cartItem.getUserId());
         User req = userService.findUserById(userId);
-        if (user.getId() == req.getId()) {
+        if (user.getId().equals(req.getId())) {
             cartItemRepository.delete(cartItem);
         } else  {
             throw new UserException("Can't remove another user  item");
         }
+        return "Delete cart item to cart";
     }
 
     @Override

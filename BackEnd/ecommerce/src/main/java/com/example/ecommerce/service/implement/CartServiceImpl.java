@@ -1,6 +1,6 @@
 package com.example.ecommerce.service.implement;
 
-import com.example.ecommerce.dto.AddItemDTO;
+import com.example.ecommerce.dto.CartItemDTO;
 import com.example.ecommerce.entity.Cart;
 import com.example.ecommerce.entity.CartItem;
 import com.example.ecommerce.entity.Product;
@@ -32,10 +32,10 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public String addCartItem(Long userId, AddItemDTO request) throws ProductException {
+    public String addCartItem(Long userId, CartItemDTO request) throws ProductException {
         Cart cart = cartRepository.findByUserId(userId);
         Product product = productService.findById(request.productId());
-        CartItem isPresent = cartItemsService.isCartItemExist(cart, product, request.size(), userId);
+        CartItem isPresent = cartItemsService.isCartItemExist(cart, product, userId);
         if (isPresent == null) {
             CartItem cartItem = new CartItem();
             cartItem.setProduct(product);
@@ -45,7 +45,6 @@ public class CartServiceImpl implements CartService {
 
             int price = request.quantity() * product.getPrice();
             cartItem.setPrice(price);
-            cartItem.setSize(request.size());
             cartItemsService.createCartItem(cartItem);
             cart.getCartItems().add(cartItem);
         }
