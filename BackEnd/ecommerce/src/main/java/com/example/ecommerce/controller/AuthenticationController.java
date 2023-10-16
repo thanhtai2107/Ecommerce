@@ -5,6 +5,7 @@ import com.example.ecommerce.auth.AuthenticationRespone;
 import com.example.ecommerce.auth.AuthenticationService;
 import com.example.ecommerce.auth.RegisterRequest;
 import com.example.ecommerce.exception.UserException;
+import com.example.ecommerce.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1")
 public class AuthenticationController {
 
-    @Autowired
-    private AuthenticationService authenticationService;
+    private final AuthenticationService authenticationService;
+
+
+    public AuthenticationController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
+
+    }
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationRespone> register(@RequestBody RegisterRequest request) {
@@ -35,4 +41,4 @@ public class AuthenticationController {
         AuthenticationRespone authenticationRespone = authenticationService.authenticate(authenticationRequest);
         return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, authenticationRespone.getToken()).body(authenticationRespone);
     }
- }
+}
