@@ -1,7 +1,13 @@
 import ReactStars from "react-rating-stars-component";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 function ProductCard(props) {
-  const { grid } = props;
+  // console.log(props);
+  const grid = props.grid;
+  // console.log(grid);
+  const product = props.product;
+  // console.log(product);
+  const navigate = useNavigate();
+
   let location = useLocation;
   return (
     <>
@@ -10,7 +16,11 @@ function ProductCard(props) {
           ? `gr-${grid}`
           : "col-3")}`}
       >
-        <Link to="/product/:id" className="product-card position-relative">
+        <div
+          // to={`/product/:${product.id}`}
+          onClick={() => navigate(`/product/${product.id}`)}
+          className="product-card position-relative"
+        >
           <div className="wishlist position-absolute">
             <Link>
               <img src="images/wish.svg" alt="wishlist" />
@@ -29,11 +39,9 @@ function ProductCard(props) {
             />
           </div>
           <div className="product-details">
-            <h6 className="brand">Sony</h6>
-            <h5 className="product-title">
-              Kid headphone bulk 10 pack multi color for student
-            </h5>
-            <p className="price">$100</p>
+            <h6 className="brand">{product.brand}</h6>
+            <h5 className="product-title">{product.title}</h5>
+            <p className="price">{product.price}</p>
             <ReactStars
               count={5}
               value={3}
@@ -44,12 +52,7 @@ function ProductCard(props) {
               fullIcon={<i className="fa fa-star"></i>}
               activeColor="#ffd700"
             />
-            <p className="description">
-              "At vero eos et accusamus et iusto odio dignissimos ducimus qui
-              blanditiis praesentium voluptatum deleniti atque corrupti quos
-              dolores et quas molestias excepturi sint occaecati cupiditate non
-              provident, similique sunt...
-            </p>
+            <p className="description"></p>
           </div>
           <div className="action-bar position-absolute">
             <div className="d-flex flex-column gap-10">
@@ -64,7 +67,7 @@ function ProductCard(props) {
               </Link>
             </div>
           </div>
-        </Link>
+        </div>
       </div>
     </>
   );

@@ -4,6 +4,7 @@ import com.example.ecommerce.entity.*;
 import com.example.ecommerce.exception.OrderException;
 import com.example.ecommerce.exception.UserException;
 import com.example.ecommerce.repositories.*;
+import com.example.ecommerce.request.CreateOrderReq;
 import com.example.ecommerce.service.CartService;
 import com.example.ecommerce.service.OrderItemService;
 import com.example.ecommerce.service.OrderService;
@@ -37,8 +38,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Orders createOrder(Long userId, Address address) throws UserException {
-        User user = userService.findUserById(userId);
+    public Orders createOrder(CreateOrderReq createOrderReq) throws UserException {
+        User user = userService.findUserById(createOrderReq.getUserId());
+        Address address = new Address();
+        address.setStreet(createOrderReq.getStreet());
+        address.setWard(createOrderReq.getWard());
+        address.setDistrict(createOrderReq.getDistrict());
+        address.setProvince(createOrderReq.getProvince());
         address.setUser(user);
         Address address1 = addressRepository.save(address);
         user.getAddresses().add(address);
@@ -66,6 +72,9 @@ public class OrderServiceImpl implements OrderService {
         createOrder.setShippingAddress(address);
         createOrder.setOrderDate(LocalDateTime.now());
         createOrder.setOrderStatus("PENDING");
+        createOrder.setFullname(createOrder.getFullname());
+        createOrder.setEmail(createOrder.getEmail());
+        createOrder.setPhone(createOrder.getPhone());
 
         Orders savedOrder = orderRepository.save(createOrder);
         for (OrderItem item : orderItemList) {

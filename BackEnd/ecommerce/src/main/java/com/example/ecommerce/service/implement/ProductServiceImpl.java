@@ -86,20 +86,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> getAllProducts(String category, List<String> colors, List<String> sizes, Integer minPrice, Integer maxPrice, String sort, String stock, Integer pageNumber, Integer pageSize) {
+    public Page<Product> getAllProducts(String category, Integer minPrice, Integer maxPrice, Integer pageNumber, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         List<Product> products = productRepository.filterProducts(category, minPrice, maxPrice);
-        if (!colors.isEmpty()) {
-            products = products.stream().filter(p -> colors.stream().anyMatch(c -> c.equalsIgnoreCase(p.getColor())))
-                    .collect(Collectors.toList());
-        }
-        if (stock != null) {
-            if(stock.equals("in_stock")){
-                products = products.stream().filter(p -> p.getQuantity() > 0).collect(Collectors.toList());
-            } else if(stock.equals("out_of_stock")) {
-                products = products.stream().filter(p -> p.getQuantity() < 1).collect(Collectors.toList());
-            }
-        }
 
         int startIndex =  (int) pageable.getOffset();
         int endIndex = Math.min(startIndex + pageable.getPageSize(), products.size());

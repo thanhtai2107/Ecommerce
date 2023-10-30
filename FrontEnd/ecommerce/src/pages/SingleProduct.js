@@ -1,19 +1,56 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactStars from "react-rating-stars-component";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
-import ProductCard from "../components/ProductCard";
 import Zoom from "react-img-zoom";
+import { findProductById, findProducts } from "../state/Product/Action";
+import { addItemToCart } from "../state/Cart/Action";
 import Colors from "../components/Colors";
 import { AiOutlineHeart } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 function SingleProduct() {
-  const [orderedProduct, setOrderedProduct] = useState(true);
+  // const [orderedProduct, setOrderedProduct] = useState(true);
+  const [quantity, setQuantity] = useState(0);
+  // console.log(quantity);
+  const dispatch = useDispatch();
+  const params = useParams();
+  const navigate = useNavigate();
+
+  const { product } = useSelector((store) => store);
+  const { auth } = useSelector((store) => store);
+  console.log(auth);
+  const productId = params.productId;
+  const userId = auth.jwt?.user?.id;
+  // console.log(productId);
+
+  const handleAddToCart = () => {
+    let price = quantity * product.product.price;
+    // const formData = new FormData();
+    // formData.append("userId", userId);
+    // formData.append("productId", productId);
+    // formData.append("quantity", quantity);
+    // formData.append("price", price);
+    const data = {
+      userId: userId,
+      productId: productId,
+      quantity: quantity,
+      price: price,
+    };
+    console.log(data);
+    dispatch(addItemToCart(data));
+    navigate("/cart");
+  };
+
+  useEffect(() => {
+    dispatch(findProductById(productId));
+  }, [productId]);
+
   return (
     <>
       <Meta title="Single Product"></Meta>
-      <BreadCrumb title="Product name"></BreadCrumb>
+      <BreadCrumb title={product.product?.title}></BreadCrumb>
       <div className="main-product-wrapper home-wrapper-2">
         <div className="container-xl">
           <div className="row">
@@ -62,12 +99,10 @@ function SingleProduct() {
             <div className="col-6">
               <div className="main-product-details">
                 <div className="border-bottom">
-                  <h3 className="title">
-                    Kids Headphones Bulk 10 Pack Multi Colored For Students
-                  </h3>
+                  <h3 className="title">{product.product?.title}</h3>
                 </div>
                 <div className="border-bottom py-3">
-                  <p className="price">$100</p>
+                  <p className="price">{product.product?.price}</p>
                   <div className="d-flex gap-10 align-items-center">
                     <ReactStars
                       count={5}
@@ -86,7 +121,7 @@ function SingleProduct() {
                 <div className="border-bottom">
                   <div className="d-flex align-items-center gap-10 my-2">
                     <h3 className="product-heading">Brand :</h3>
-                    <p className="product-data">Match</p>
+                    <p className="product-data">{product.product?.brand}</p>
                   </div>
                   <div className="d-flex align-items-center gap-10 my-2">
                     <h3 className="product-heading">Tag :</h3>
@@ -102,7 +137,7 @@ function SingleProduct() {
                   </div>
                   <div className="d-flex align-items-center gap-10 my-2">
                     <h3 className="product-heading">Availablity :</h3>
-                    <p className="product-data">Match</p>
+                    <p className="product-data">In stock</p>
                   </div>
                   <div className="d-flex flex-column gap-10 mt-2 mb-3">
                     <h3 className="product-heading">Size :</h3>
@@ -123,13 +158,20 @@ function SingleProduct() {
                     <div>
                       <input
                         className="form-control"
+                        value={quantity}
+                        onChange={(e) => setQuantity(e.target.value)}
                         type="number"
                         min={1}
                         max={10}
                         style={{ width: "70px" }}
                       />
                     </div>
-                    <button className="button border-0">Add to Cart</button>
+                    <button
+                      onClick={handleAddToCart}
+                      className="button border-0"
+                    >
+                      Add to Cart
+                    </button>
                   </div>
                   <div className="">
                     <Link>
@@ -165,23 +207,7 @@ function SingleProduct() {
             <div className="col-12">
               <h4>Description</h4>
               <div className="bg-white p-3">
-                <p>
-                  "At vero eos et accusamus et iusto odio dignissimos ducimus
-                  qui blanditiis praesentium voluptatum deleniti atque corrupti
-                  quos dolores et quas molestias excepturi sint occaecati
-                  cupiditate non provident, similique sunt in culpa qui officia
-                  deserunt mollitia animi, id est laborum et dolorum fuga. Et
-                  harum quidem rerum facilis est et expedita distinctio. Nam
-                  libero tempore, cum soluta nobis est eligendi optio cumque
-                  nihil impedit quo minus id quod maxime placeat facere
-                  possimus, omnis voluptas assumenda est, omnis dolor
-                  repellendus. Temporibus autem quibusdam et aut officiis
-                  debitis aut rerum necessitatibus saepe eveniet ut et
-                  voluptates repudiandae sint et molestiae non recusandae.
-                  Itaque earum rerum hic tenetur a sapiente delectus, ut aut
-                  reiciendis voluptatibus maiores alias consequatur aut
-                  perferendis doloribus asperiores repellat."
-                </p>
+                <p>{product.product?.description}</p>
               </div>
             </div>
           </div>
@@ -210,11 +236,11 @@ function SingleProduct() {
                       <p>Based on 6 reviews</p>
                     </div>
                   </div>
-                  {orderedProduct && (
+                  {/* {orderedProduct && (
                     <div>
                       <Link className="text-dark">Write a review</Link>
                     </div>
-                  )}
+                  )} */}
                 </div>
                 <div className="review-form py-4">
                   <h4>Write a review</h4>
@@ -274,7 +300,7 @@ function SingleProduct() {
               <h3 className="section-heading">You may also like</h3>
             </div>
             <div className="row">
-              <div className="col-3">
+              {/* <div className="col-3">
                 <ProductCard />
               </div>
               <div className="col-3">
@@ -285,7 +311,7 @@ function SingleProduct() {
               </div>
               <div className="col-3">
                 <ProductCard />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -80,6 +80,29 @@ p {
 .header-upper .header-upper-link p {
   font-size: 13px;
 }
+.header-upper .user-function {
+  list-style: none;
+  background-color: var(--color-131921);
+  min-width: 200px;
+  border-radius: 5px;
+}
+.header-upper .user-function li {
+  padding: 15px;
+  margin-bottom: 3px;
+  border-bottom: 1px solid var(--color-3b4149);
+}
+.header-upper .user-function li:first-child {
+  padding-top: 30px;
+}
+.header-upper .user-profile:hover .user-function {
+  display: block !important;
+
+  padding: 0;
+  top: 42px;
+  left: 0px;
+  z-index: 10;
+}
+
 .header-bottom {
   background-color: var(--color-3b4149);
 }

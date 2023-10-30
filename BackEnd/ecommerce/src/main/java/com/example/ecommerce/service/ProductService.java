@@ -13,7 +13,7 @@ public interface ProductService {
     ProductDTO updateProduct(Long id, ProductDTO productDTO) throws ProductException;
     Product findById(Long id) throws ProductException;
     List<Product> findProductByCategory(String category);
-    Page<Product> getAllProducts(String category, List<String> color, List<String> size, Integer minPrice, Integer maxPrice
-    , String sort, String stock, Integer pageNumber, Integer pageSize );
+    Page<Product> getAllProducts(String category,  Integer minPrice, Integer maxPrice
+    ,  Integer pageNumber, Integer pageSize );
 
 }

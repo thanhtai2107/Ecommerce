@@ -32,7 +32,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public String addCartItem(Long userId, CartItemDTO request) throws ProductException {
+    public String addCartItem( CartItemDTO request) throws ProductException {
+        Long userId = request.userId();
         Cart cart = cartRepository.findByUserId(userId);
         Product product = productService.findById(request.productId());
         CartItem isPresent = cartItemsService.isCartItemExist(cart, product, userId);

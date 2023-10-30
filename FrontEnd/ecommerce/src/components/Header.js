@@ -1,6 +1,13 @@
 import { NavLink, Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../state/auth/Action";
 function Header() {
+  const { auth } = useSelector((store) => store);
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+  };
   return (
     <>
       <header className="header-top-strip py-3">
@@ -67,12 +74,26 @@ function Header() {
                 <div>
                   <Link
                     to="/login"
-                    className="d-flex align-items-center gap-10 text-white"
+                    className="d-flex align-items-center gap-10 text-white user-profile position-relative"
                   >
                     <img alt="user" src="images/user.svg" />
-                    <p>
-                      Login <br /> My Account
-                    </p>
+                    {auth.jwt ? (
+                      <div>
+                        <p>
+                          Hello <br /> {auth.jwt.user.fullname}
+                        </p>
+                        <ul className="d-none position-absolute user-function">
+                          <li>My profile</li>
+                          <li>Change Password</li>
+                          <li>Orders History</li>
+                          <li onClick={handleLogout}>Logout</li>
+                        </ul>
+                      </div>
+                    ) : (
+                      <p>
+                        Login <br /> My Account
+                      </p>
+                    )}
                   </Link>
                 </div>
                 <div>

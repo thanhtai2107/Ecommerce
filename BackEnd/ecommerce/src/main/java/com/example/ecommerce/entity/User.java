@@ -22,12 +22,12 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String username;
+    private String email;
     private String password;
     private String fullname;
     @Enumerated(EnumType.STRING)
     private Role role;
-    private String mobile;
+    private String phone;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Address> addresses = new ArrayList<>();
@@ -48,7 +48,7 @@ public class User implements UserDetails {
     }
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

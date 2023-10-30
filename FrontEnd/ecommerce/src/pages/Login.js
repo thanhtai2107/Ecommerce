@@ -1,7 +1,40 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../state/auth/Action";
+import { useEffect } from "react";
+
 function Login() {
+  const { auth } = useSelector((store) => store);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const jwt = localStorage.getItem("jwt");
+
+  useEffect(() => {
+    if (auth.jwt) {
+      if (auth.jwt.user.role === "ADMIN") {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
+    }
+    if (location === "/login" || location === "/register") {
+      navigate(-1);
+    }
+  }, [jwt, auth.jwt]);
+  const handleLogin = (event) => {
+    event.preventDefault();
+
+    const data = new FormData(event.currentTarget);
+
+    const userData = {
+      email: data.get("email"),
+      password: data.get("password"),
+    };
+    dispatch(login(userData));
+  };
   return (
     <>
       <Meta title="Login"></Meta>
@@ -12,12 +45,13 @@ function Login() {
             <div className="col-12">
               <div className="login-form">
                 <h3 className="text-center">Login</h3>
-                <form action="" className="py-2">
+                <form action="" onSubmit={handleLogin} className="py-2">
                   <div className="py-2">
                     <input
                       type="email"
                       placeholder="Email"
                       className="form-control"
+                      name="email"
                     />
                   </div>
                   <div>
@@ -25,6 +59,7 @@ function Login() {
                       type="password"
                       placeholder="Password"
                       className="form-control"
+                      name="password"
                     />
                   </div>
                   <Link to="/forgot-password" className="forgot-password">

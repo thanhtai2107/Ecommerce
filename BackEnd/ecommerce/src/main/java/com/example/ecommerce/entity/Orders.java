@@ -20,9 +20,9 @@ public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    private String orderId;
-
+    private String fullname;
+    private String email;
+    private String phone;
     @ManyToOne
     private User user;
 
