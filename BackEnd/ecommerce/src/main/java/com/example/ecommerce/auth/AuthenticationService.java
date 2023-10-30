@@ -32,11 +32,12 @@ public class AuthenticationService {
     }
 
     public AuthenticationRespone register(RegisterRequest request) throws UserException {
-        if (userRepository.findByUsername(request.getUsername()).isPresent()) throw new UserException("Exist user");
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) throw new UserException("Exist user");
         var user = User.builder()
-                .username(request.getUsername())
+                .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .fullname(request.getFullname())
+                .phone(request.getPhone())
                 .role(Role.USER)
                 .build();
         userRepository.save(user);
@@ -45,11 +46,11 @@ public class AuthenticationService {
     }
 
     public AuthenticationRespone authenticate(AuthenticationRequest authenticationRequest) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),
                 authenticationRequest.getPassword()));
 
         var user = userRepository
-                .findByUsername(authenticationRequest.getUsername()).orElseThrow();
+                .findByEmail(authenticationRequest.getEmail()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         return new AuthenticationRespone(jwtToken, user);
     }

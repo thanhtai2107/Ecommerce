@@ -45,7 +45,7 @@ function SpecialProduct() {
               <p>Products: 5</p>
               <div className="progress">
                 <div
-                  class="progress-bar"
+                  className="progress-bar"
                   role="progressbar"
                   style={{ width: "25%" }}
                   aria-valuenow="50"

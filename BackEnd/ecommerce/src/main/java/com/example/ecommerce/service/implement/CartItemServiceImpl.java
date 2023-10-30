@@ -30,7 +30,6 @@ public class CartItemServiceImpl implements CartItemService {
     public CartItem createCartItem(CartItem cartItem) {
         cartItem.setQuantity(1);
         cartItem.setPrice(cartItem.getProduct().getPrice() * cartItem.getQuantity());
-
         CartItem createdCartItem = cartItemRepository.save(cartItem);
         return createdCartItem;
     }

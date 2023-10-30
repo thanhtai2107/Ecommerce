@@ -1,10 +1,64 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import ProductCard from "../components/ProductCard";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { findProducts } from "../state/Product/Action";
+import Stack from "@mui/material/Stack";
+import Pagination from "@mui/material/Pagination";
 
 function OurStore() {
   const [grid, setGrid] = useState(4);
+  const location = useLocation();
+  const navigate = useNavigate();
+  // const param = useParams();
+  const dispatch = useDispatch();
+  const { product } = useSelector((store) => store);
+  // console.log(product.products);
+  const handlePaging = (event, value) => {
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set("page", value);
+    const query = searchParams.toString;
+    navigate({ search: `?${query}` });
+  };
+  // const decodedQueryString = decodeURIComponent(location.search);
+  // const searchParams = new URLSearchParams(decodedQueryString);
+  // const category = searchParams.get("category");
+  // const pageNumber = searchParams.get("pageNumber");
+  // const priceValue = searchParams.get("price");
+
+  // const handleFilter = (value, sectionId) => {
+  //   const searchParams = new URLSearchParams(location.search);
+  //   let filterValue = searchParams.getAll(sectionId);
+  //   if (filterValue.length > 0 && filterValue[0].split(",").includes(value)) {
+  //     filterValue = filterValue[0].split(",").filter((item) => item !== value);
+  //     if (filterValue.length === 0) {
+  //       searchParams.delete(sectionId);
+  //     }
+  //   } else {
+  //     filterValue.push(value);
+  //   }
+  //   if (filterValue.length > 0) {
+  //     searchParams.set(sectionId, filterValue.join(","));
+  //     const query = searchParams.toString();
+  //     navigate({ search: `?${query}` });
+  //   }
+  // };
+
+  useEffect(() => {
+    // const [minPrice, maxPrice] =
+    //   priceValue === null ? [0, 0] : priceValue.split("-").map(Number);
+
+    // const data = {
+    //   category: param.lavelThree,
+    //   minPrice,
+    //   maxPrice,
+    //   pageNumber: pageNumber + 1,
+    //   pageSize: 10,
+    // };
+    dispatch(findProducts());
+  }, []);
   return (
     <>
       <Meta title="OurStore"></Meta>
@@ -22,6 +76,28 @@ function OurStore() {
                     <li>Camera</li>
                     <li>Laptop</li>
                   </ul>
+                  {/* <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id=""
+                    />
+                    <label className="form-check-label" htmlFor="">
+                      Phone
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id=""
+                    />
+                    <label className="form-check-label" htmlFor="">
+                      Headphone
+                    </label>
+                  </div> */}
                 </div>
               </div>
               <div className="filter-card mb-3">
@@ -203,9 +279,24 @@ function OurStore() {
               </div>
               <div className="products-list py-5">
                 <div className="d-flex gap-10 flex-wrap">
-                  <ProductCard grid={grid} />
-                  <ProductCard grid={grid} />
+                  {/* <ProductCard grid={grid} />
+                  <ProductCard grid={grid} /> */}
+                  {product.products.map((item) => {
+                    return (
+                      <ProductCard key={item.id} grid={grid} product={item} />
+                    );
+                  })}
                 </div>
+              </div>
+              <div className="pagination d-flex justify-content-center">
+                <Stack spacing={2}>
+                  <Pagination
+                    count={10}
+                    variant="outlined"
+                    color="primary"
+                    onChange={handlePaging}
+                  />
+                </Stack>
               </div>
             </div>
           </div>

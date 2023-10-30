@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -28,11 +29,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
         return http.csrf().disable()
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/authenticate", "/api/v1/register", "/api").permitAll()
+                .requestMatchers("/api/v1/authenticate", "/api/v1/register","/api/v2/products", "/api/v2/product/{id}").permitAll()
                 .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -40,14 +40,5 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
-//        http.csrf(Customizer.withDefaults())
-//                .authorizeHttpRequests(authorize -> authorize
-//                        .requestMatchers()
-//                        .anyRequest().authenticated()
-//                )
-//                .httpBasic(Customizer.withDefaults())
-//                .formLogin(Customizer.withDefaults());
-
-//        return http.build();
     }
 }

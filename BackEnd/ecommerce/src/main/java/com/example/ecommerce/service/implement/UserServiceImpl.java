@@ -18,8 +18,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Override
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public Optional<User> findByUsername(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override

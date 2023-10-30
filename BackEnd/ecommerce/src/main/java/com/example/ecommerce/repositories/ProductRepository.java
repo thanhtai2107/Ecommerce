@@ -10,9 +10,9 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product,Long> {
     @Query("SELECT p FROM Product p " +
             "WHERE (p.cate.name=:category OR :category='')" +
-            "AND (:minPrice IS NULL AND :maxPrice IS NULL)"
+            "AND ((:minPrice IS NULL AND :maxPrice IS NULL) OR (p.price BETWEEN :minPrice AND :maxPrice))"
     )
-    public List<Product> filterProducts(@Param("category") String category,
+    List<Product> filterProducts(@Param("category") String category,
                                         @Param("minPrice") Integer minPrice,
                                         @Param("maxPrice") Integer maxPrice
 

@@ -210,7 +210,7 @@ function Home() {
               <h3 className="section-heading">Featured Collection</h3>
             </div>
             <div className="row">
-              <div className="col-3">
+              {/* <div className="col-3">
                 <ProductCard />
               </div>
               <div className="col-3">
@@ -221,7 +221,7 @@ function Home() {
               </div>
               <div className="col-3">
                 <ProductCard />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -7,7 +7,7 @@ import com.example.ecommerce.exception.ProductException;
 
 public interface CartService {
     Cart createCart(User user);
-    String addCartItem(Long userId, CartItemDTO request) throws ProductException;
+    String addCartItem( CartItemDTO request) throws ProductException;
 
     Cart findUserCart(Long userId);
 }
