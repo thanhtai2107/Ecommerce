@@ -59,9 +59,7 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setProduct(cartItem.getProduct());
             orderItem.setQuantity(cartItem.getQuantity());
             orderItem.setUserId(user.getId());
-
-            OrderItem createdOrderItem = orderItemRepository.save(orderItem);
-            orderItemList.add(createdOrderItem);
+            orderItemList.add(orderItem);
         }
 
         Orders createOrder = new Orders();
@@ -79,11 +77,9 @@ public class OrderServiceImpl implements OrderService {
         Orders savedOrder = orderRepository.save(createOrder);
         for (OrderItem item : orderItemList) {
             item.setOrder(savedOrder);
+            OrderItem createdOrderItem = orderItemRepository.save(item);
         }
-
         return savedOrder;
-
-
     }
 
     @Override

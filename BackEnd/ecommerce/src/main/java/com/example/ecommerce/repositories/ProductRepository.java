@@ -1,6 +1,8 @@
 package com.example.ecommerce.repositories;
 
 import com.example.ecommerce.entity.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -8,13 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product,Long> {
-    @Query("SELECT p FROM Product p " +
-            "WHERE (p.cate.name=:category OR :category='')" +
-            "AND ((:minPrice IS NULL AND :maxPrice IS NULL) OR (p.price BETWEEN :minPrice AND :maxPrice))"
-    )
-    List<Product> filterProducts(@Param("category") String category,
-                                        @Param("minPrice") Integer minPrice,
-                                        @Param("maxPrice") Integer maxPrice
-
-                                        );
+    String FILTER_PRODUCT_BY_NAME = "select p from Product p where p.title like concat('%',?1,'%') and p.cate.name = ?2";
+    @Query(FILTER_PRODUCT_BY_NAME)
+    Page<Product> findByTitleAndCate_Name(String title,String category, Pageable pageable);
 }

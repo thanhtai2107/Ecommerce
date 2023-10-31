@@ -4,13 +4,12 @@ import com.example.ecommerce.entity.Cate;
 import com.example.ecommerce.repositories.CategoryRepository;
 import com.example.ecommerce.service.CategoryService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v2")
 public class CategoryController {
 
     private final CategoryRepository categoryRepository;
@@ -24,5 +23,9 @@ public class CategoryController {
         Cate category1 = new Cate();
         category1.setName(category);
         return ResponseEntity.ok(categoryRepository.save(category1));
+    }
+    @GetMapping("/getCategory")
+    public ResponseEntity<List<Cate>> getCategory() {
+        return ResponseEntity.ok(categoryRepository.findAll());
     }
 }

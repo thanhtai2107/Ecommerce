@@ -2,12 +2,22 @@ import { NavLink, Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../state/auth/Action";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { useEffect, useState } from "react";
+import { API_BASE_URL, api } from "../config/apiConfig";
+import axios from "axios";
 function Header() {
+  const [category, setCategory] = useState();
   const { auth } = useSelector((store) => store);
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logout());
   };
+  useEffect(() => {
+    axios.get(`${API_BASE_URL}/api/v2/getCategory`).then((data) => {
+      setCategory(data.data);
+    });
+  }, []);
   return (
     <>
       <header className="header-top-strip py-3">
@@ -83,15 +93,15 @@ function Header() {
                           Hello <br /> {auth.jwt.user.fullname}
                         </p>
                         <ul className="d-none position-absolute user-function">
-                          <li>My profile</li>
-                          <li>Change Password</li>
-                          <li>Orders History</li>
-                          <li onClick={handleLogout}>Logout</li>
+                          <li>Thông tin cá nhân</li>
+                          <li>Thay đổi mật khẩu</li>
+                          <li>Lịch sử đơn hàng</li>
+                          <li onClick={handleLogout}>Đăng xuất</li>
                         </ul>
                       </div>
                     ) : (
                       <p>
-                        Login <br /> My Account
+                        Đăng nhập <br /> Tài khoản
                       </p>
                     )}
                   </Link>
@@ -150,10 +160,33 @@ function Header() {
                 </div>
                 <div className="menu-link">
                   <div className="d-flex align-items-center gap-15">
-                    <NavLink to="/">Home</NavLink>
-                    <NavLink to="/product">Our store</NavLink>
-                    <NavLink to="/blog">Blog</NavLink>
-                    <NavLink to="/contact">Contact</NavLink>
+                    <NavLink className="menu-link-item" to="/">
+                      TRANG CHỦ
+                    </NavLink>
+                    <p className="store position-relative menu-link-item">
+                      CỬA HÀNG
+                      <ArrowDropDownIcon />
+                      <ul className="category position-absolute">
+                        {category?.map((category) => {
+                          return (
+                            <NavLink
+                              to={{
+                                pathname: "/product",
+                                search: `?page=1&category=${category.name}`,
+                              }}
+                            >
+                              <li>{category.name}</li>
+                            </NavLink>
+                          );
+                        })}
+                      </ul>
+                    </p>
+                    <NavLink className="menu-link-item" to="/blog">
+                      BLOG
+                    </NavLink>
+                    <NavLink className="menu-link-item" to="/contact">
+                      LIÊN HỆ
+                    </NavLink>
                   </div>
                 </div>
               </div>
