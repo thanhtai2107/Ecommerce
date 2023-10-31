@@ -2,63 +2,71 @@ import { useEffect, useState } from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import ProductCard from "../components/ProductCard";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { findProducts } from "../state/Product/Action";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 
+const filters = [
+  { id: 1, value: "Giá giảm dần", field: "price", order: "DESC" },
+  { id: 2, value: "Giá tăng dần", field: "price", order: "ASC" },
+  { id: 3, value: "Theo tên A-Z", field: "title", order: "ASC" },
+  { id: 4, value: "Theo tên Z-A", field: "title", order: "DESC" },
+];
 function OurStore() {
   const [grid, setGrid] = useState(4);
   const location = useLocation();
   const navigate = useNavigate();
-  // const param = useParams();
   const dispatch = useDispatch();
   const { product } = useSelector((store) => store);
-  // console.log(product.products);
-  const handlePaging = (event, value) => {
-    const searchParams = new URLSearchParams(location.search);
-    searchParams.set("page", value);
-    const query = searchParams.toString;
-    navigate({ search: `?${query}` });
-  };
-  // const decodedQueryString = decodeURIComponent(location.search);
-  // const searchParams = new URLSearchParams(decodedQueryString);
-  // const category = searchParams.get("category");
-  // const pageNumber = searchParams.get("pageNumber");
-  // const priceValue = searchParams.get("price");
+  console.log("product", product.products);
 
-  // const handleFilter = (value, sectionId) => {
-  //   const searchParams = new URLSearchParams(location.search);
-  //   let filterValue = searchParams.getAll(sectionId);
-  //   if (filterValue.length > 0 && filterValue[0].split(",").includes(value)) {
-  //     filterValue = filterValue[0].split(",").filter((item) => item !== value);
-  //     if (filterValue.length === 0) {
-  //       searchParams.delete(sectionId);
-  //     }
-  //   } else {
-  //     filterValue.push(value);
-  //   }
-  //   if (filterValue.length > 0) {
-  //     searchParams.set(sectionId, filterValue.join(","));
-  //     const query = searchParams.toString();
-  //     navigate({ search: `?${query}` });
-  //   }
-  // };
+  // const decodedQueryString = decodeURIComponent(location.search);
+  const queryParams = new URLSearchParams(location.search);
+  console.log(queryParams);
+  const currentPage = Number(queryParams.get("page")) || 1;
+  const sort = queryParams.get("sort");
+  const direction = queryParams.get("direction");
+  const category = queryParams.get("category");
+
+  const handlePageChange = (e, page) => {
+    queryParams.append("page", page - 1);
+    queryParams.set("page", page - 1);
+    navigate({ search: queryParams.toString() });
+    console.log(page);
+  };
+  const handlefilter = (field, order) => {
+    if (queryParams.toString().includes("sort")) {
+      queryParams.set("sort", field);
+    } else {
+      queryParams.append("sort", field);
+    }
+    if (queryParams.toString().includes("direction")) {
+      queryParams.set("direction", order);
+    } else {
+      queryParams.append("direction", order);
+    }
+    navigate({ search: `?${queryParams}` });
+  };
 
   useEffect(() => {
-    // const [minPrice, maxPrice] =
-    //   priceValue === null ? [0, 0] : priceValue.split("-").map(Number);
-
-    // const data = {
-    //   category: param.lavelThree,
-    //   minPrice,
-    //   maxPrice,
-    //   pageNumber: pageNumber + 1,
-    //   pageSize: 10,
-    // };
-    dispatch(findProducts());
-  }, []);
+    const data = {
+      title: "",
+      category: category,
+      size: 2,
+      page: currentPage - 1,
+      sortList: sort === null ? "" : sort,
+      sortDirection: direction === null ? "" : direction,
+    };
+    console.log(data);
+    dispatch(findProducts(data));
+  }, [currentPage, sort, direction]);
   return (
     <>
       <Meta title="OurStore"></Meta>
@@ -103,29 +111,26 @@ function OurStore() {
               <div className="filter-card mb-3">
                 <h3 className="filter-title">Filter By</h3>
                 <div>
-                  <h5 className="sub-title">Availablity</h5>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id=""
-                    />
-                    <label className="form-check-label" htmlFor="">
-                      In Stock (1)
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id=""
-                    />
-                    <label className="form-check-label" htmlFor="">
-                      Out of Stock (0)
-                    </label>
-                  </div>
+                  <h5 className="sub-title">Giá</h5>
+                  {filters.map((filter) => {
+                    return (
+                      <div className="form-check" key={filter.id}>
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          value={filter.value}
+                          id={filter.id}
+                          name="filter"
+                          onChange={() =>
+                            handlefilter(filter.field, filter.order)
+                          }
+                        />
+                        <label className="form-check-label" htmlFor={filter.id}>
+                          {filter.value}
+                        </label>
+                      </div>
+                    );
+                  })}
                 </div>
                 <div>
                   <h5 className="sub-title">Price</h5>
@@ -281,20 +286,26 @@ function OurStore() {
                 <div className="d-flex gap-10 flex-wrap">
                   {/* <ProductCard grid={grid} />
                   <ProductCard grid={grid} /> */}
-                  {product.products.map((item) => {
-                    return (
-                      <ProductCard key={item.id} grid={grid} product={item} />
-                    );
-                  })}
+                  {product.products.content != null ? (
+                    product.products.content.map((item) => {
+                      return (
+                        <ProductCard key={item.id} grid={grid} product={item} />
+                      );
+                    })
+                  ) : (
+                    <div>No item</div>
+                  )}
                 </div>
               </div>
               <div className="pagination d-flex justify-content-center">
                 <Stack spacing={2}>
                   <Pagination
-                    count={10}
+                    count={product?.products?.totalPage}
                     variant="outlined"
                     color="primary"
-                    onChange={handlePaging}
+                    onChange={(e, page) =>
+                      handlePageChange(e.target.value, page)
+                    }
                   />
                 </Stack>
               </div>

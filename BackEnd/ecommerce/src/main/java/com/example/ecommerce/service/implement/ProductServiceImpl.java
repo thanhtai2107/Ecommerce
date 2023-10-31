@@ -10,11 +10,10 @@ import com.example.ecommerce.repositories.ProductRepository;
 import com.example.ecommerce.service.ProductService;
 import com.example.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -86,15 +85,25 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> getAllProducts(String category, Integer minPrice, Integer maxPrice, Integer pageNumber, Integer pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        List<Product> products = productRepository.filterProducts(category, minPrice, maxPrice);
-
-        int startIndex =  (int) pageable.getOffset();
-        int endIndex = Math.min(startIndex + pageable.getPageSize(), products.size());
-
-        List<Product> pageContent = products.subList(startIndex, endIndex);
-        Page<Product> filteredProducts = new PageImpl<>(pageContent, pageable, products.size());
-        return filteredProducts;
+    public List<Sort.Order> create(List<String> sortList, String sortDirection) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        Sort.Direction direction;
+        for (String sort: sortList) {
+            if(sortDirection != null) {
+                direction = Sort.Direction.fromString(sortDirection);
+            } else {
+                direction = Sort.Direction.DESC;
+            }
+            sorts.add(new Sort.Order(direction, sort));
+        }
+        return sorts;
     }
+
+    @Override
+    public Page<Product> findAllProducts(String title,String category, int page, int size, List<String> sortList, String sortDirection) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(create(sortList, sortDirection)));
+        return productRepository.findByTitleAndCate_Name(title,category, pageable);
+    }
+
+
 }

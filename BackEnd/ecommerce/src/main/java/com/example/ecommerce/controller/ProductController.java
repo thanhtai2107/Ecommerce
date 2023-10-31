@@ -7,6 +7,9 @@ import com.example.ecommerce.repositories.ProductRepository;
 import com.example.ecommerce.service.CategoryService;
 import com.example.ecommerce.service.ProductService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,5 +48,17 @@ public class ProductController {
     @GetMapping("product/{id}")
     public ResponseEntity<Product> findProductById(@PathVariable Long id) throws ProductException {
         return ResponseEntity.ok(productService.findById(id));
+    }
+    @GetMapping("/productPage")
+    public ResponseEntity<Page<Product>> getAll(
+            @RequestParam(defaultValue = "") String title,
+            @RequestParam(defaultValue = "") String category,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "2") int size,
+            @RequestParam(defaultValue = "") List<String> sortList,
+            @RequestParam(defaultValue = "DESC") Sort.Direction sortDirection
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(productService.findAllProducts(title,category,page, size,sortList, sortDirection.toString()));
     }
 }

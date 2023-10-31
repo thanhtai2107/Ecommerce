@@ -4,6 +4,7 @@ import com.example.ecommerce.dto.ProductDTO;
 import com.example.ecommerce.entity.Product;
 import com.example.ecommerce.exception.ProductException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -13,7 +14,6 @@ public interface ProductService {
     ProductDTO updateProduct(Long id, ProductDTO productDTO) throws ProductException;
     Product findById(Long id) throws ProductException;
     List<Product> findProductByCategory(String category);
-    Page<Product> getAllProducts(String category,  Integer minPrice, Integer maxPrice
-    ,  Integer pageNumber, Integer pageSize );
-
+    List<Sort.Order> create(List<String> sortList, String sortDirection);
+    Page<Product> findAllProducts(String title,String category, int page, int size,List<String> sortList, String sortDirection);
 }

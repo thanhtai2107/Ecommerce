@@ -31,7 +31,12 @@ public class SecurityConfig {
         return http.csrf().disable()
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/authenticate", "/api/v1/register","/api/v2/products", "/api/v2/product/{id}").permitAll()
+                .requestMatchers("/api/v1/authenticate",
+                        "/api/v1/register",
+                        "/api/v2/products",
+                        "/api/v2/productPage",
+                        "/api/v2/product/{id}",
+                        "/api/v2/getCategory").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()

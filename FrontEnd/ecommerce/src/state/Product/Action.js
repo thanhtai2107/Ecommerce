@@ -9,13 +9,15 @@ import {
 import { API_BASE_URL } from "../../config/apiConfig";
 import axios from "axios";
 
-export const findProducts = () => async (dispatch) => {
+export const findProducts = (reqData) => async (dispatch) => {
   dispatch({ type: FIND_PRODUCTS_REQUEST });
   // const { category, minPrice, maxPrice, pageNumber, pageSize } = reqData;
   try {
-    const { data } = await axios.get(`${API_BASE_URL}/api/v2/products`);
-    console.log("hello");
-    dispatch({ type: FIND_PRODUCTS_SUCCESS, payload: data });
+    const data = await axios.get(
+      `${API_BASE_URL}/api/v2/productPage?title=${reqData.title}&category=${reqData.category}&page=${reqData.page}&size=${reqData.size}&sortList=${reqData.sortList}&sortDirection=${reqData.sortDirection}`
+    );
+    console.log("after sort", data.data);
+    dispatch({ type: FIND_PRODUCTS_SUCCESS, payload: data.data });
   } catch (error) {
     dispatch({ type: FIND_PRODUCTS_FAILURE, payload: error.message });
   }
