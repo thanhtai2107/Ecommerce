@@ -18,38 +18,33 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@RequestMapping("/api/v2/")
+@RequestMapping("/api/v2")
 public class ProductController {
     private final ProductService productService;
-    private final CategoryService categoryService;
 
     private final ProductRepository productRepository;
 
 
-    public ProductController(ProductService productService, CategoryService categoryService, ProductRepository productRepository) {
+    public ProductController(ProductService productService, ProductRepository productRepository) {
         this.productService = productService;
-        this.categoryService = categoryService;
         this.productRepository = productRepository;
     }
 
-//    @GetMapping("/products")
-//    public ResponseEntity<Page<Product>> findProductsByCategory(@RequestParam String category,
-//                                                                @RequestParam Integer minPrice,
-//                                                                @RequestParam Integer maxPrice,
-//                                                                @RequestParam Integer pageNumber,
-//                                                                @RequestParam Integer pageSize) {
-//        return ResponseEntity.ok(productService.getAllProducts(category, minPrice, maxPrice,pageNumber, pageSize));
-//    }
 
-    @GetMapping("/products")
-    public ResponseEntity<List<Product>> getAllProduct() {
-        return ResponseEntity.ok(productRepository.findAll());
+
+    @GetMapping("/product")
+    public ResponseEntity<Page<Product>> getProductByTitle(@RequestParam String title,
+                                                           @RequestParam(defaultValue = "0") int page,
+                                                           @RequestParam(defaultValue = "2") int size,
+                                                           @RequestParam(defaultValue = "") List<String> sortList,
+                                                           @RequestParam(defaultValue = "DESC") Sort.Direction sortDirection) {
+        return ResponseEntity.ok(productService.findProductByTitle(title, page, size, sortList, sortDirection.toString()));
     }
     @GetMapping("product/{id}")
-    public ResponseEntity<Product> findProductById(@PathVariable Long id) throws ProductException {
+    public ResponseEntity<ProductDTO> findProductById(@PathVariable Long id) throws ProductException {
         return ResponseEntity.ok(productService.findById(id));
     }
-    @GetMapping("/productPage")
+    @GetMapping("/products")
     public ResponseEntity<Page<Product>> getAll(
             @RequestParam(defaultValue = "") String title,
             @RequestParam(defaultValue = "") String category,
@@ -58,7 +53,12 @@ public class ProductController {
             @RequestParam(defaultValue = "") List<String> sortList,
             @RequestParam(defaultValue = "DESC") Sort.Direction sortDirection
     ) {
-        Pageable pageable = PageRequest.of(page, size);
+
         return ResponseEntity.ok(productService.findAllProducts(title,category,page, size,sortList, sortDirection.toString()));
+    }
+
+    @GetMapping("/allproduct")
+    public ResponseEntity<List<ProductDTO>> getAllProduct() {
+        return ResponseEntity.ok(productService.findAll());
     }
 }

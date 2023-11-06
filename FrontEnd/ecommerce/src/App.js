@@ -20,17 +20,21 @@ import AdminLayout from "./components/admin/AdminLayout";
 import ProductList from "./components/admin/list/ProductList";
 import UpdateProduct from "./components/admin/update/UpdateProduct";
 import NewProduct from "./components/admin/new/NewProduct";
+import Search from "./pages/Search";
+import { routes } from "./router/index";
+import { Fragment } from "react";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          {/* <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/product" element={<OurStore />} />
+            <Route path="/search" element={<Search />} />
             <Route path="/product/:productId" element={<SingleProduct />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<CheckOut />} />
@@ -50,7 +54,28 @@ function App() {
               path="/admin/updateproduct/:id"
               element={<UpdateProduct />}
             />
-          </Route>
+          </Route> */}
+          {routes.map((route, index) => {
+            const Layout = route.layout;
+            let PrivateRoute = Fragment;
+            if (route.private) {
+              PrivateRoute = route.private;
+            }
+            const Page = route.component;
+            return (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+                  <PrivateRoute>
+                    <Layout>
+                      <route.component />
+                    </Layout>
+                  </PrivateRoute>
+                }
+              />
+            );
+          })}
         </Routes>
       </BrowserRouter>
     </>

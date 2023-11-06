@@ -2,7 +2,6 @@ package com.example.ecommerce.controller;
 
 import com.example.ecommerce.entity.Cate;
 import com.example.ecommerce.repositories.CategoryRepository;
-import com.example.ecommerce.service.CategoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,5 +26,12 @@ public class CategoryController {
     @GetMapping("/getCategory")
     public ResponseEntity<List<Cate>> getCategory() {
         return ResponseEntity.ok(categoryRepository.findAll());
+    }
+
+    @GetMapping("/category")
+    public ResponseEntity<Cate> getCategoryByName(
+            @RequestParam("category") String category
+            ) {
+        return ResponseEntity.ok(categoryRepository.findCateByName(category));
     }
 }

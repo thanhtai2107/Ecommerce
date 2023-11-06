@@ -3,6 +3,7 @@ package com.example.ecommerce.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
@@ -15,7 +16,8 @@ import java.util.*;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
     private Long id;
 
     private String title;
@@ -26,11 +28,12 @@ public class Product {
 
     private int quantity;
 
+    private int sold;
+
     private String brand;
 
-    private String color;
-
-    private String imgUrl;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Img> imgs = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
@@ -42,5 +45,7 @@ public class Product {
 
     @ManyToOne
     private Cate cate;
+
+    private LocalDateTime localDateTime;
 
 }
