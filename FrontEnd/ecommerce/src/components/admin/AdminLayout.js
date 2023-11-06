@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 
-function AdminLayout() {
+function AdminLayout({ children }) {
   return (
     <>
       <div className="top-wrapper border-bottom">
@@ -22,9 +22,7 @@ function AdminLayout() {
               <Sidebar />
             </div>
             <div className="col-10">
-              <div className="content-wrapper">
-                <Outlet />
-              </div>
+              <div className="content-wrapper">{children}</div>
             </div>
           </div>
         </div>

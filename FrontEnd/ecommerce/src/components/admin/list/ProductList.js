@@ -1,111 +1,133 @@
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
-const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 70 },
-  { field: "name", headerName: "Product name", width: 160 },
-  {
-    field: "discription",
-    headerName: "Discription",
-    width: 160,
-  },
-  {
-    field: "price",
-    headerName: "Price",
-    width: 120,
-  },
-  {
-    field: "quantity",
-    headerName: "Quantity",
-    width: 90,
-  },
-  {
-    field: "sold",
-    headerName: "Sold",
-    width: 90,
-  },
-  {
-    field: "category",
-    headerName: "Category",
-    description: "This column has a value getter and is not sortable.",
-    width: 120,
-    renderCell: (params) => {
-      return (
-        <>
-          <span>{params.row.category.name}</span>
-        </>
-      );
-    },
-  },
-  {
-    field: "action",
-    headerName: "Action",
-    description: "Action",
-    sortable: false,
-    width: 160,
-    renderCell: (params) => {
-      return (
-        <>
-          <div className="cellAction">
-            <Button
-              className="p-1 me-1"
-              color="success"
-              size="small"
-              variant="contained"
-              //   onClick={(e) => handleUpdate(params.row.id)}
-            >
-              Update
-            </Button>
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteProduct,
+  findAllProduct,
+  findProductByTitle,
+} from "../../../state/Product/Action";
 
-            <Button
-              className="p-1"
-              color="error"
-              variant="contained"
-              size="small"
-              //   onClick={(e) => handleDelete(params.row.id)}
-            >
-              Delete
-            </Button>
-          </div>
-        </>
-      );
-    },
-  },
-];
-const product = [
-  {
-    id: 1,
-    name: "Snow",
-    discription: "Jon",
-    price: 35,
-    quantity: 23,
-    sold: 25,
-    category: "hello",
-  },
-];
 function ProductList() {
-  return (
-    <>
-      <div className="product-list-wrapper">
-        <div>
-          <div className="py-4">
-            <Button variant="contained">Add Product</Button>
-          </div>
-          <div className="product-list position-relative">
-            <DataGrid
-              rows={product}
-              columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: { page: 0, pageSize: 5 },
-                },
-              }}
-              pageSizeOptions={[5, 10]}
-            />
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { product } = useSelector((store) => store);
+
+  const columns = [
+    { field: "id", headerName: "ID", width: 70 },
+    { field: "title", headerName: "Tên sản phẩm", width: 130 },
+    { field: "description", headerName: "Mô tả", width: 130 },
+    {
+      field: "price",
+      headerName: "Giá",
+      type: "number",
+      width: 90,
+    },
+    {
+      field: "quantity",
+      headerName: "Quantity",
+      type: "number",
+      width: 90,
+    },
+    {
+      field: "cate",
+      headerName: "Danh mục",
+      description: "This column has a value getter and is not sortable.",
+      width: 120,
+      renderCell: (params) => {
+        return (
+          <>
+            <span>{params.row.category.name}</span>
+          </>
+        );
+      },
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      description: "Action",
+      sortable: false,
+      width: 160,
+      renderCell: (params) => {
+        return (
+          <>
+            <div className="cellAction">
+              <Button
+                color="success"
+                size="small"
+                variant="contained"
+                onClick={() =>
+                  navigate(`/admin/updateproduct/${params.row.id}`)
+                }
+              >
+                Update
+              </Button>
+
+              <Button
+                color="error"
+                variant="contained"
+                size="small"
+                onClick={(e) => handleDelete(params.row.id)}
+              >
+                Delete
+              </Button>
+            </div>
+          </>
+        );
+      },
+    },
+  ];
+  const handleDelete = (productId) => {
+    dispatch(deleteProduct(productId));
+    dispatch(findAllProduct());
+  };
+
+  useEffect(() => {
+    dispatch(findAllProduct());
+  }, []);
+
+  if (product?.products?.length > 0) {
+    return (
+      <>
+        <div className="product-list-wrapper">
+          <div>
+            <div className="py-4">
+              <Link to="/admin/addProduct">
+                <Button variant="contained">Thêm sản phẩm</Button>
+              </Link>
+            </div>
+            <div className="product-list position-relative">
+              <div style={{ height: 400, width: "100%" }}>
+                <DataGrid
+                  rows={product.products}
+                  columns={columns}
+                  initialState={{
+                    pagination: {
+                      paginationModel: { page: 0, pageSize: 5 },
+                    },
+                  }}
+                  pageSizeOptions={[5, 10]}
+                />
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div className="product-list-wrapper">
+          <div>
+            <Link to="/admin/addProduct">
+              <Button variant="contained">Thêm sản phẩm</Button>
+            </Link>
+          </div>
+        </div>
+      </>
+    );
+  }
 }
 
 export default ProductList;

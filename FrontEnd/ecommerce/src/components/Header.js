@@ -1,22 +1,23 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../state/auth/Action";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useEffect, useState } from "react";
-import { API_BASE_URL, api } from "../config/apiConfig";
-import axios from "axios";
+import { getCategory } from "../state/Category/Action";
+import { store } from "../state/store";
 function Header() {
-  const [category, setCategory] = useState();
   const { auth } = useSelector((store) => store);
+  const { category } = useSelector((store) => store);
+  const [title, setTitle] = useState("");
+  console.log(category);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logout());
   };
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/api/v2/getCategory`).then((data) => {
-      setCategory(data.data);
-    });
+    dispatch(getCategory());
   }, []);
   return (
     <>
@@ -47,16 +48,26 @@ function Header() {
             <div className="col-5 d-flex align-items-center">
               <div className="input-group">
                 <input
+                  value={title}
                   type="text"
                   className="form-control"
-                  placeholder="Search product..."
+                  placeholder="Tìm kiếm sản phẩm..."
                   aria-label="Search product..."
                   aria-describedby="basic-addon2"
+                  onChange={(e) => setTitle(e.target.value)}
                 />
                 <div className="input-group-append">
-                  <span className="input-group-text h-100" id="basic-addon2">
-                    <BsSearch />
-                  </span>
+                  <Link
+                    style={{ height: "38px" }}
+                    to={{
+                      pathname: "/search",
+                      search: `?page=1&title=${title}`,
+                    }}
+                  >
+                    <span className="input-group-text h-100" id="basic-addon2">
+                      <BsSearch />
+                    </span>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -167,7 +178,7 @@ function Header() {
                       CỬA HÀNG
                       <ArrowDropDownIcon />
                       <ul className="category position-absolute">
-                        {category?.map((category) => {
+                        {category?.category?.map((category) => {
                           return (
                             <NavLink
                               to={{

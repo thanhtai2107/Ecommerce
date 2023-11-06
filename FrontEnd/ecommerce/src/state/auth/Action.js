@@ -50,9 +50,7 @@ export const login = (userdata) => async (dispatch) => {
     );
     const user = respone.data;
     console.log(user.token);
-    if (user.token) {
-      localStorage.setItem("jwt", user.token);
-    }
+    localStorage.setItem("jwt", user.token);
     dispatch(loginSuccess(user));
   } catch (error) {
     dispatch(loginFailure(error.message));

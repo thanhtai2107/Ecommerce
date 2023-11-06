@@ -7,6 +7,7 @@ import com.example.ecommerce.entity.Product;
 import com.example.ecommerce.entity.User;
 import com.example.ecommerce.exception.ProductException;
 import com.example.ecommerce.repositories.CartRepository;
+import com.example.ecommerce.repositories.ProductRepository;
 import com.example.ecommerce.service.CartItemService;
 import com.example.ecommerce.service.CartService;
 import com.example.ecommerce.service.ProductService;
@@ -17,11 +18,13 @@ public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
     private final CartItemService cartItemsService;
     private final ProductService productService;
+    private final ProductRepository productRepository;
 
-    public CartServiceImpl(CartRepository cartRepository, CartItemService cartItemsService, ProductService productService) {
+    public CartServiceImpl(CartRepository cartRepository, CartItemService cartItemsService, ProductService productService, ProductRepository productRepository) {
         this.cartRepository = cartRepository;
         this.cartItemsService = cartItemsService;
         this.productService = productService;
+        this.productRepository = productRepository;
     }
 
     @Override
@@ -35,7 +38,7 @@ public class CartServiceImpl implements CartService {
     public String addCartItem( CartItemDTO request) throws ProductException {
         Long userId = request.userId();
         Cart cart = cartRepository.findByUserId(userId);
-        Product product = productService.findById(request.productId());
+        Product product = productRepository.findProductById(request.productId());
         CartItem isPresent = cartItemsService.isCartItemExist(cart, product, userId);
         if (isPresent == null) {
             CartItem cartItem = new CartItem();
