@@ -9,6 +9,7 @@ export const getCategory = () => async (dispatch) => {
   dispatch({ type: GET_CATEGORY_REQUEST });
   try {
     const data = await axios.get(`${API_BASE_URL}/api/v2/getCategory`);
+    console.log("data", data.data);
     dispatch({ type: GET_CATEGORY_SUCCESS, payload: data.data });
   } catch (error) {
     dispatch({ type: GET_CATEGORY_FAILURE, payload: error.message });

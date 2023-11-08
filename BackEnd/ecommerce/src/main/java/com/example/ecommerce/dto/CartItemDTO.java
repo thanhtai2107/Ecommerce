@@ -1,9 +1,14 @@
 package com.example.ecommerce.dto;
 
+import lombok.Builder;
+
+@Builder
 public record CartItemDTO(
-        Long userId,
-        Long productId,
-        int quantity,
-        int price
+    Long id,
+    CartDTO cardDTO,
+    ProductDTO productDTO,
+    int quantity,
+    int price,
+    Long userId
 ) {
 }

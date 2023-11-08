@@ -6,12 +6,14 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useEffect, useState } from "react";
 import { getCategory } from "../state/Category/Action";
 import { store } from "../state/store";
+import { getCart } from "../state/Cart/Action";
 function Header() {
   const { auth } = useSelector((store) => store);
   const { category } = useSelector((store) => store);
+  const { cart } = useSelector((store) => store);
+  console.log("cart", cart);
+  const userId = auth.jwt?.user?.id;
   const [title, setTitle] = useState("");
-  console.log(category);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logout());
@@ -19,6 +21,10 @@ function Header() {
   useEffect(() => {
     dispatch(getCategory());
   }, []);
+
+  useEffect(() => {
+    dispatch(getCart(userId));
+  }, [userId]);
   return (
     <>
       <header className="header-top-strip py-3">
@@ -72,23 +78,15 @@ function Header() {
               </div>
             </div>
             <div className="col-5">
-              <div className="header-upper-link d-flex align-items-center justify-content-between">
-                <div>
-                  <Link className="d-flex align-items-center gap-10 text-white text-">
-                    <img alt="compare" src="images/compare.svg" />
-                    <p>
-                      Compare <br /> Product
-                    </p>
-                  </Link>
-                </div>
+              <div className="header-upper-link d-flex align-items-center justify-content-end gap-15">
                 <div>
                   <Link
-                    to="/wishlist"
-                    className="d-flex align-items-center gap-10 text-white"
+                    to="/order"
+                    className="d-flex align-items-center gap-10 text-white text-"
                   >
-                    <img alt="wishlist" src="images/wishlist.svg" />
+                    <img alt="compare" src="images/compare.svg" />
                     <p>
-                      Favourite <br /> WishList
+                      Lịch sử <br /> đơn hàng
                     </p>
                   </Link>
                 </div>
@@ -101,7 +99,7 @@ function Header() {
                     {auth.jwt ? (
                       <div>
                         <p>
-                          Hello <br /> {auth.jwt.user.fullname}
+                          Xin chào <br /> {auth?.jwt?.user?.fullname}
                         </p>
                         <ul className="d-none position-absolute user-function">
                           <li>Thông tin cá nhân</li>
@@ -124,8 +122,10 @@ function Header() {
                   >
                     <img alt="cart" src="images/cart.svg" />
                     <div className="d-flex flex-column gap-10">
-                      <span className="badge bg-white text-black">0</span>
-                      <p>$ 500</p>
+                      <span className="badge bg-white text-black">
+                        {cart.cart ? cart.cart.data.totalItem : 0}
+                      </span>
+                      <p>{cart.cart ? cart.cart.data.totalPrice : 0}</p>
                     </div>
                   </Link>
                 </div>
@@ -150,23 +150,6 @@ function Header() {
                       <img alt="" src="images/menu.svg" />
                       <span>Show Categories</span>
                     </button>
-                    <ul className="dropdown-menu">
-                      <li>
-                        <Link className="dropdown-item text-white" to="">
-                          Action
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item text-white" to="">
-                          Another action
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item text-white" to="">
-                          Something else here
-                        </Link>
-                      </li>
-                    </ul>
                   </div>
                 </div>
                 <div className="menu-link">
@@ -192,9 +175,6 @@ function Header() {
                         })}
                       </ul>
                     </p>
-                    <NavLink className="menu-link-item" to="/blog">
-                      BLOG
-                    </NavLink>
                     <NavLink className="menu-link-item" to="/contact">
                       LIÊN HỆ
                     </NavLink>

@@ -36,7 +36,7 @@ function Footer() {
         <div className="container-xl">
           <div className="row">
             <div className="col-4">
-              <h4 className="mb-4 text-white">Contact Us</h4>
+              <h4 className="mb-4 text-white">Liên hệ</h4>
               <div className="footer-links d-flex flex-column">
                 <address className="text-white py-2 m-1">
                   Linh Trung-Thu Duc-TP Ho Chi Minh
@@ -60,21 +60,24 @@ function Footer() {
               </div>
             </div>
             <div className="col-3">
-              <h4 className="mb-4 text-white">Information</h4>
+              <h4 className="mb-4 text-white">Thông tin</h4>
               <div className="footer-links d-flex flex-column">
-                <Link className="text-white py-2 m-1 ">Privacy Policy</Link>
-                <Link className="text-white py-2 m-1 ">Refund Policy</Link>
-                <Link className="text-white py-2 m-1 ">Shipping Policy</Link>
-                <Link className="text-white py-2 m-1 ">Term & Policy</Link>
-                <Link className="text-white py-2 m-1 ">Blog</Link>
+                <Link className="text-white py-2 m-1 ">
+                  Chính sách trang web
+                </Link>
+                <Link className="text-white py-2 m-1 ">
+                  Chính sách hoàn tiền
+                </Link>
+                <Link className="text-white py-2 m-1 ">
+                  Chính sách giao hàng
+                </Link>
               </div>
             </div>
             <div className="col-3">
-              <h4 className="mb-4 text-white">Account</h4>
+              <h4 className="mb-4 text-white">Tài khoản</h4>
               <div className="footer-links d-flex flex-column">
-                <Link className="text-white py-2 m-1 ">About</Link>
-                <Link className="text-white py-2 m-1 ">Faq</Link>
-                <Link className="text-white py-2 m-1 ">Contact</Link>
+                <Link className="text-white py-2 m-1 ">Giới thiệu</Link>
+                <Link className="text-white py-2 m-1 ">Liên hệ</Link>
               </div>
             </div>
             <div className="col-2">

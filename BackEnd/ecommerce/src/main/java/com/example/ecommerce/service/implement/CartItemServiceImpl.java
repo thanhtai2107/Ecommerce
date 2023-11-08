@@ -8,6 +8,7 @@ import com.example.ecommerce.exception.CartItemException;
 import com.example.ecommerce.exception.UserException;
 import com.example.ecommerce.repositories.CartItemRepository;
 import com.example.ecommerce.repositories.CartRepository;
+import com.example.ecommerce.repositories.UserRepository;
 import com.example.ecommerce.service.CartItemService;
 import com.example.ecommerce.service.UserService;
 import org.springframework.stereotype.Service;
@@ -16,14 +17,16 @@ import java.util.Optional;
 
 @Service
 public class CartItemServiceImpl implements CartItemService {
-    private CartItemRepository cartItemRepository;
-    private UserService userService;
-    private CartRepository cartRepository;
+    private final CartItemRepository cartItemRepository;
+    private final UserService userService;
+    private final CartRepository cartRepository;
+    private final UserRepository userRepository;
 
-    public CartItemServiceImpl(CartItemRepository cartItemRepository, UserService userService, CartRepository cartRepository) {
+    public CartItemServiceImpl(CartItemRepository cartItemRepository, UserService userService, CartRepository cartRepository, UserRepository userRepository) {
         this.cartItemRepository = cartItemRepository;
         this.userService = userService;
         this.cartRepository = cartRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -35,32 +38,34 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public CartItem updateCartItem(Long id, Long userId, CartItem cartItem) throws CartItemException, UserException {
-        CartItem cartItem1 = findCartItemById(id);
-        User user = userService.findUserById(userId);
-        cartItem1.setQuantity(cartItem.getQuantity());
-        cartItem1.setPrice(cartItem1.getQuantity() * cartItem1.getProduct().getPrice());
-        return cartItemRepository.save(cartItem1);
+    public CartItem updateCartItem(Long id, Long userId, CartItem cartItem) throws CartItemException {
+            CartItem cartItem1 = findCartItemById(id);
+            User user = userRepository.findUserById(userId);
+            if(cartItem.getQuantity() < cartItem.getProduct().getQuantity()) {
+                cartItem1.setQuantity(cartItem.getQuantity());
+                cartItem1.setPrice(cartItem1.getQuantity() * cartItem1.getProduct().getPrice());
+                return cartItemRepository.save(cartItem1);
+            }
+            throw  new CartItemException("Cap nhat gio hang loi");
+
     }
 
     @Override
     public CartItem isCartItemExist(Cart cart, Product product, Long userId) {
-        CartItem cartItem = cartItemRepository.isCartItemExist(cart, product, userId);
-
-        return cartItem;
+        return cartItemRepository.isCartItemExist(cart, product, userId);
     }
 
     @Override
     public String deleteCartItem(Long id, Long userId) throws CartItemException, UserException {
         CartItem cartItem = findCartItemById(id);
-        User user = userService.findUserById(cartItem.getUserId());
-        User req = userService.findUserById(userId);
+        User user = userRepository.findUserById(cartItem.getUserId());
+        User req = userRepository.findUserById(userId);
         if (user.getId().equals(req.getId())) {
             cartItemRepository.delete(cartItem);
         } else  {
-            throw new UserException("Can't remove another user  item");
+            throw new UserException("Khong the xoa san pham ");
         }
-        return "Delete cart item to cart";
+        return "Xoa san pham khoi gio hang";
     }
 
     @Override
@@ -69,6 +74,6 @@ public class CartItemServiceImpl implements CartItemService {
         if (cartItem.isPresent()) {
             return cartItem.get();
         }
-        throw new CartItemException("Cart item not found");
+        throw new CartItemException("Khong tim thay cart item");
     }
 }

@@ -1,13 +1,15 @@
 package com.example.ecommerce.auth;
 
+import com.example.ecommerce.entity.Address;
 import com.example.ecommerce.entity.Role;
 import com.example.ecommerce.entity.User;
 import com.example.ecommerce.exception.UserException;
 import com.example.ecommerce.jwt.JWTService;
+import com.example.ecommerce.mapper.UserDTOMapper;
+import com.example.ecommerce.repositories.AddressRepository;
 import com.example.ecommerce.repositories.UserRepository;
 
 import com.example.ecommerce.service.CartService;
-import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,13 +24,16 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final JWTService jwtService;
     private final CartService cartService;
+    private final AddressRepository addressRepository;
 
-    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JWTService jwtService, CartService cartService) {
+    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JWTService jwtService, CartService cartService, AddressRepository addressRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
         this.cartService = cartService;
+        this.addressRepository = addressRepository;
+
     }
 
     public AuthenticationRespone register(RegisterRequest request) throws UserException {
@@ -40,7 +45,17 @@ public class AuthenticationService {
                 .phone(request.getPhone())
                 .role(Role.USER)
                 .build();
-        userRepository.save(user);
+
+        User userSaved =userRepository.save(user);
+        Address addressSaved = addressRepository.save(Address.builder()
+                .street(request.getAddress().getStreet())
+                .ward(request.getAddress().getWard())
+                .district(request.getAddress().getDistrict())
+                .province(request.getAddress().getProvince())
+                .user(userSaved)
+                .build()
+        );
+        userSaved.setAddress(addressSaved);
         cartService.createCart(user);
         return new AuthenticationRespone("", null);
     }

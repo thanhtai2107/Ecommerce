@@ -12,6 +12,7 @@ import {
   GET_USER_FAILURE,
   LOG_OUT,
 } from "./ActionType";
+import { toast } from "react-toastify";
 
 const registerRequest = () => ({ type: REGISTER_REQUEST });
 const registerSuccess = (user) => ({ type: REGISTER_SUCCESS, payload: user });
@@ -49,11 +50,12 @@ export const login = (userdata) => async (dispatch) => {
       userdata
     );
     const user = respone.data;
-    console.log(user.token);
     localStorage.setItem("jwt", user.token);
     dispatch(loginSuccess(user));
+    toast.success("Đăng nhập thành công");
   } catch (error) {
     dispatch(loginFailure(error.message));
+    toast.warn("Đăng nhập thất bại");
   }
 };
 

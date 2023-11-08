@@ -24,6 +24,7 @@ import {
 import { API_BASE_URL, api, api2 } from "../../config/apiConfig";
 import axios from "axios";
 import authHeader from "../../config/auth-header";
+import { toast } from "react-toastify";
 
 export const findProducts = (reqData) => async (dispatch) => {
   dispatch({ type: FIND_PRODUCTS_REQUEST });
@@ -76,23 +77,32 @@ export const findProductById = (reqData) => async (dispatch) => {
 export const addProduct = (reqData) => async (dispatch) => {
   dispatch({ type: ADD_PRODUCT_REQUEST });
   try {
-    const data = await api2.post("/api/v1/admin/addProduct", reqData);
+    const data = await axios.post(
+      `${API_BASE_URL}/api/v1/admin/addProduct`,
+      reqData,
+      { ...authHeader(), "Content-Type": "multipart/form-data" }
+    );
     dispatch({ type: ADD_PRODUCT_SUCCESS, payload: data.data });
+    toast.success("Thêm sản phẩm thành công");
   } catch (error) {
     dispatch({ type: ADD_PRODUCT_FAILURE, payload: error.message });
+    toast.error("Thêm sản phẩm thất bại");
   }
 };
 
 export const updateProduct = (reqData, productId) => async (dispatch) => {
   dispatch({ type: UPDATE_PRODUCT_REQUEST });
   try {
-    const data = await api2.put(
-      `/api/v1/admin/updateProduct/${productId}`,
-      reqData
+    const data = await axios.put(
+      `${API_BASE_URL}/api/v1/admin/updateProduct/${productId}`,
+      reqData,
+      { ...authHeader(), "Content-Type": "multipart/form-data" }
     );
     dispatch({ type: UPDATE_PRODUCT_SUCCESS, payload: data.data });
+    toast.success("Cập nhật sản phẩm thành công");
   } catch (error) {
     dispatch({ type: UPDATE_PRODUCT_FAILURE, payload: error.message });
+    toast.error("Cập nhật sản phẩm thất bại");
   }
 };
 
@@ -104,7 +114,9 @@ export const deleteProduct = (reqData) => async (dispatch) => {
       authHeader()
     );
     dispatch({ type: DELETE_PRODUCT_SUCCESS, payload: data.data });
+    toast.success("Xóa sản phẩm thành công");
   } catch (error) {
     dispatch({ type: DELETE_PRODUCT_FAILURE, payload: error.message });
+    toast.error("Xóa sản phẩm thất bại");
   }
 };

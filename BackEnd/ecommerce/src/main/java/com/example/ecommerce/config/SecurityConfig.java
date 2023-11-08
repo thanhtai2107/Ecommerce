@@ -37,6 +37,7 @@ public class SecurityConfig {
                         "/api/v2/allproduct",
                         "/api/v2/product",
                         "/api/v2/product/{id}",
+                        "api/v2/reviews/{id}",
                         "/api/v2/getCategory").permitAll()
                 .anyRequest().authenticated()
                 .and()

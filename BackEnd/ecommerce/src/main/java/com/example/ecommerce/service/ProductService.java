@@ -16,6 +16,6 @@ public interface ProductService {
     List<Product> findProductByCategory(String category);
     List<ProductDTO> findAll();
     List<Sort.Order> create(List<String> sortList, String sortDirection);
-    Page<Product> findAllProducts(String title,String category, int page, int size,List<String> sortList, String sortDirection);
-    Page<Product> findProductByTitle(String title,int page, int size,List<String> sortList, String sortDirection);
+    Page<ProductDTO> findAllProducts(String title,String category, int page, int size,List<String> sortList, String sortDirection);
+    Page<ProductDTO> findProductByTitle(String title,int page, int size,List<String> sortList, String sortDirection);
 }

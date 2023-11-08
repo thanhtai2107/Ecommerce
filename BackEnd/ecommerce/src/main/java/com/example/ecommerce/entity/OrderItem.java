@@ -23,12 +23,12 @@ public class OrderItem {
     @ManyToOne
     private Orders order;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Product product;
 
     private int quantity;
 
-    private Integer price;
+    private int price;
 
     private Long userId;
 }

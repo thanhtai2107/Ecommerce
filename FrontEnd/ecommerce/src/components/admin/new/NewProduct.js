@@ -4,8 +4,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategory } from "../../../state/Category/Action";
 import { addProduct } from "../../../state/Product/Action";
+import { checkExpired } from "../../../service";
+import { useNavigate } from "react-router-dom";
 
 function NewProduct() {
+  const navigate = useNavigate();
   const { category } = useSelector((store) => store);
   const dispatch = useDispatch();
   const [img, setImg] = useState([]);
@@ -32,7 +35,12 @@ function NewProduct() {
       data.append(`imgUrl`, img.originFileObj);
     });
     console.log("category", data.getAll("category"));
-    dispatch(addProduct(data));
+    if (checkExpired(localStorage.getItem("jwt"))) {
+      dispatch(addProduct(data));
+    } else {
+      navigate("/login");
+    }
+
     setTitle("");
     setDescription("");
     setPrice("");

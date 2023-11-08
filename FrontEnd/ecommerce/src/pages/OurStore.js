@@ -79,7 +79,7 @@ function OurStore() {
     const data = {
       title: title === null ? "" : title,
       category: category2,
-      size: 2,
+      size: 8,
       page: currentPage - 1,
       sortList: sort === null ? "" : sort,
       sortDirection: direction === null ? "" : direction,

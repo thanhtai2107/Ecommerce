@@ -1,13 +1,16 @@
 package com.example.ecommerce.service.implement;
 
-import com.example.ecommerce.dto.CartItemDTO;
+import com.example.ecommerce.dto.CartDTO;
 import com.example.ecommerce.entity.Cart;
 import com.example.ecommerce.entity.CartItem;
 import com.example.ecommerce.entity.Product;
 import com.example.ecommerce.entity.User;
 import com.example.ecommerce.exception.ProductException;
+import com.example.ecommerce.mapper.CartDTOMapper;
+import com.example.ecommerce.repositories.CartItemRepository;
 import com.example.ecommerce.repositories.CartRepository;
 import com.example.ecommerce.repositories.ProductRepository;
+import com.example.ecommerce.request.CartReq;
 import com.example.ecommerce.service.CartItemService;
 import com.example.ecommerce.service.CartService;
 import com.example.ecommerce.service.ProductService;
@@ -17,14 +20,17 @@ import org.springframework.stereotype.Service;
 public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
     private final CartItemService cartItemsService;
+    private final CartItemRepository cartItemRepository;
     private final ProductService productService;
     private final ProductRepository productRepository;
-
-    public CartServiceImpl(CartRepository cartRepository, CartItemService cartItemsService, ProductService productService, ProductRepository productRepository) {
+    private final CartDTOMapper cartDTOMapper;
+    public CartServiceImpl(CartRepository cartRepository, CartItemService cartItemsService, CartItemRepository cartItemRepository, ProductService productService, ProductRepository productRepository, CartDTOMapper cartDTOMapper) {
         this.cartRepository = cartRepository;
         this.cartItemsService = cartItemsService;
+        this.cartItemRepository = cartItemRepository;
         this.productService = productService;
         this.productRepository = productRepository;
+        this.cartDTOMapper = cartDTOMapper;
     }
 
     @Override
@@ -35,7 +41,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public String addCartItem( CartItemDTO request) throws ProductException {
+    public String addCartItem( CartReq request) throws ProductException {
         Long userId = request.userId();
         Cart cart = cartRepository.findByUserId(userId);
         Product product = productRepository.findProductById(request.productId());
@@ -46,17 +52,20 @@ public class CartServiceImpl implements CartService {
             cartItem.setQuantity(request.quantity());
             cartItem.setUserId(userId);
             cartItem.setCart(cart);
-
             int price = request.quantity() * product.getPrice();
             cartItem.setPrice(price);
-            cartItemsService.createCartItem(cartItem);
+            cartItemRepository.save(cartItem);
             cart.getCartItems().add(cartItem);
+            cartRepository.save(cart);
+        } else {
+            isPresent.setQuantity(request.quantity());
+            cartItemRepository.save(isPresent);
         }
         return "Item add to Cart";
     }
 
     @Override
-    public Cart findUserCart(Long userId) {
+    public CartDTO findUserCart(Long userId) {
         Cart cart = cartRepository.findByUserId(userId);
         int totalPrice = 0;
         int totalItem = 0;
@@ -66,6 +75,7 @@ public class CartServiceImpl implements CartService {
         }
         cart.setTotalItem(totalItem);
         cart.setTotalPrice(totalPrice);
-        return cart;
+        Cart cartSaved =cartRepository.save(cart);
+        return cartDTOMapper.apply(cartSaved);
     }
 }

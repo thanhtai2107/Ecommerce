@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 
 @Service
@@ -129,15 +130,29 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> findAllProducts(String title, String category, int page, int size, List<String> sortList, String sortDirection) {
+    public Page<ProductDTO> findAllProducts(String title, String category, int page, int size, List<String> sortList, String sortDirection) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(create(sortList, sortDirection)));
-        return productRepository.findByTitleAndCate_Name(title, category, pageable);
+        Page<Product> allProductsEntity = productRepository.findByTitleAndCate_Name(title, category, pageable);
+        Page<ProductDTO> allProducts = allProductsEntity.map(new Function<Product, ProductDTO>() {
+            @Override
+            public ProductDTO apply(Product product) {
+                return productDTOMapper.apply(product);
+            }
+        });
+        return allProducts;
     }
 
     @Override
-    public Page<Product> findProductByTitle(String title, int page, int size, List<String> sortList, String sortDirection) {
+    public Page<ProductDTO> findProductByTitle(String title, int page, int size, List<String> sortList, String sortDirection) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(create(sortList, sortDirection)));
-        return productRepository.findProductByTitle(title, pageable);
+        Page<Product> allProductsEntity = productRepository.findProductByTitle(title, pageable);
+        Page<ProductDTO> allProducts = allProductsEntity.map(new Function<Product, ProductDTO>() {
+            @Override
+            public ProductDTO apply(Product product) {
+                return productDTOMapper.apply(product);
+            }
+        });
+        return allProducts;
     }
 
 

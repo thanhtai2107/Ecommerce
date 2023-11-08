@@ -26,7 +26,10 @@ function Sidebar() {
             <h6>List</h6>
             <div className="mt-2">
               <div>
-                <Link className="item-wrapper d-flex align-items-center gap-1 ps-2 py-1 text-dark">
+                <Link
+                  to="/admin/userlist"
+                  className="item-wrapper d-flex align-items-center gap-1 ps-2 py-1 text-dark"
+                >
                   <AccountCircle className="icon" />
                   <p>Quản lí người dùng</p>
                 </Link>
@@ -41,13 +44,19 @@ function Sidebar() {
                 </Link>
               </div>
               <div>
-                <Link className="item-wrapper d-flex align-items-center gap-1 ps-2 py-1 text-dark">
+                <Link
+                  to="/admin/orderlist"
+                  className="item-wrapper d-flex align-items-center gap-1 ps-2 py-1 text-dark"
+                >
                   <Reorder className="icon" />
                   <p>Quản lí đơn hàng</p>
                 </Link>
               </div>
               <div>
-                <Link className="item-wrapper d-flex align-items-center gap-1 ps-2 py-1 text-dark">
+                <Link
+                  to="/admin/categorylist"
+                  className="item-wrapper d-flex align-items-center gap-1 ps-2 py-1 text-dark"
+                >
                   <Category className="icon" />
                   <p>Quản lí danh mục</p>
                 </Link>

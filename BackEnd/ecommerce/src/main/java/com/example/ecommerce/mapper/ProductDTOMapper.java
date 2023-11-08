@@ -32,13 +32,7 @@ public class ProductDTOMapper implements Function<Product, ProductDTO> {
                 )
         ;
     }
-    public List<String> convertImgToString(List<Img> imgList) {
-        List<String> imgs = new ArrayList<>();
-        for (Img img : imgList) {
-            imgs.add(img.getUrl());
-        }
-        return imgs;
-    }
+
 
     public Product toProduct(ProductDTO productDTO) {
         return Product.builder()
@@ -48,7 +42,25 @@ public class ProductDTOMapper implements Function<Product, ProductDTO> {
                 .quantity(productDTO.quantity())
                 .sold(productDTO.sold())
                 .brand(productDTO.brand())
+                .imgs(convertToImg(productDTO.imgs()))
                 .cate(productDTO.category())
                 .build();
+    }
+
+    public List<String> convertImgToString(List<Img> imgList) {
+        List<String> imgs = new ArrayList<>();
+        for (Img img : imgList) {
+            imgs.add(img.getUrl());
+        }
+        return imgs;
+    }
+    public List<Img> convertToImg(List<String> imgList) {
+        List<Img> imgs = new ArrayList<>();
+        for (String img : imgList) {
+            imgs.add(Img.builder()
+                    .url(img)
+                    .build());
+        }
+        return imgs;
     }
 }
