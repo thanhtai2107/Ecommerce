@@ -5,6 +5,8 @@ import ProductCard from "../components/ProductCard";
 import SpecialProduct from "../components/SpecialProduct";
 
 function Home() {
+  const jwt = localStorage.getItem("jwt");
+  console.log("home jwt", jwt);
   return (
     <>
       <section className="home-wrapper-1 py-5">

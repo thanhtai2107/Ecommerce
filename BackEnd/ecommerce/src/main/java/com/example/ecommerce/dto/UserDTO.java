@@ -1,19 +1,16 @@
 package com.example.ecommerce.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class UserDTO {
+    private Long id;
     private String email;
-    private String password;
     private String fullname;
-    private String address;
     private String phone;
     private String role;
 }

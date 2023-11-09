@@ -8,7 +8,7 @@ function BreadCrumb(props) {
           <div className="col-12">
             <p className="text-center">
               <Link to="/" className="text-dark">
-                Home &nbsp;
+                Trang chủ &nbsp;
               </Link>
               / {title}
             </p>

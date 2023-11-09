@@ -33,7 +33,7 @@ public class ProductController {
 
 
     @GetMapping("/product")
-    public ResponseEntity<Page<Product>> getProductByTitle(@RequestParam String title,
+    public ResponseEntity<Page<ProductDTO>> getProductByTitle(@RequestParam String title,
                                                            @RequestParam(defaultValue = "0") int page,
                                                            @RequestParam(defaultValue = "2") int size,
                                                            @RequestParam(defaultValue = "") List<String> sortList,
@@ -45,7 +45,7 @@ public class ProductController {
         return ResponseEntity.ok(productService.findById(id));
     }
     @GetMapping("/products")
-    public ResponseEntity<Page<Product>> getAll(
+    public ResponseEntity<Page<ProductDTO>> getAll(
             @RequestParam(defaultValue = "") String title,
             @RequestParam(defaultValue = "") String category,
             @RequestParam(defaultValue = "0") int page,

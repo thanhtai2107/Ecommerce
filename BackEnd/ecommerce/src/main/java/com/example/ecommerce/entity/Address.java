@@ -9,6 +9,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 
 public class Address {
 
@@ -20,7 +21,7 @@ public class Address {
     private String district;
     private String province;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;

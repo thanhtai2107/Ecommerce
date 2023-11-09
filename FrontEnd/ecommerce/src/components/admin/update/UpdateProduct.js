@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategory, getCategoryByName } from "../../../state/Category/Action";
 import { findProductById, updateProduct } from "../../../state/Product/Action";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { checkExpired } from "../../../service";
 
 function UpdateProduct() {
+  const navigate = useNavigate();
   const { productId } = useParams();
   const { category } = useSelector((store) => store);
   const { product } = useSelector((store) => store);
@@ -37,7 +39,11 @@ function UpdateProduct() {
       data.append(`imgUrl`, img.originFileObj);
     });
 
-    dispatch(updateProduct(data, productId));
+    if (checkExpired(localStorage.getItem("jwt"))) {
+      dispatch(updateProduct(data, productId));
+    } else {
+      navigate("/login");
+    }
   };
 
   useEffect(() => {

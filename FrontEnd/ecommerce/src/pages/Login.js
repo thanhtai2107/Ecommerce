@@ -4,26 +4,32 @@ import Meta from "../components/Meta";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../state/auth/Action";
 import { useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
 
 function Login() {
   const { auth } = useSelector((store) => store);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const jwt = localStorage.getItem("jwt");
 
   useEffect(() => {
-    if (auth.jwt) {
-      if (auth.jwt.user.role === "ADMIN") {
+    if (auth?.jwt) {
+      if (
+        auth?.jwt?.user?.role === "ADMIN" &&
+        Date.now() <= jwtDecode(auth.jwt.token).exp * 1000
+      ) {
         navigate("/admin");
-      } else {
+      } else if (
+        auth?.jwt?.user?.role === "USER" &&
+        Date.now() <= jwtDecode(auth.jwt.token).exp * 1000
+      ) {
         navigate("/");
       }
     }
     if (location === "/login" || location === "/register") {
       navigate(-1);
     }
-  }, [jwt, auth.jwt]);
+  }, [auth?.jwt]);
   const handleLogin = (event) => {
     event.preventDefault();
 
@@ -44,7 +50,7 @@ function Login() {
           <div className="row">
             <div className="col-12">
               <div className="login-form">
-                <h3 className="text-center">Login</h3>
+                <h3 className="text-center">Đăng nhập</h3>
                 <form action="" onSubmit={handleLogin} className="py-2">
                   <div className="py-2">
                     <input
@@ -57,20 +63,20 @@ function Login() {
                   <div>
                     <input
                       type="password"
-                      placeholder="Password"
+                      placeholder="Mật khẩu"
                       className="form-control"
                       name="password"
                     />
                   </div>
                   <Link to="/forgot-password" className="forgot-password">
-                    <p className="m-2">Forgot your password?</p>
+                    <p className="m-2">Quên mật khẩu?</p>
                   </Link>
                   <div className="d-flex gap-10 justify-content-center align-items-center mt-3">
                     <button className="button" type="submit">
-                      Login
+                      Đăng nhập
                     </button>
                     <Link to="/register">
-                      <button className="button">Sign up</button>
+                      <button className="button">Đăng kí</button>
                     </Link>
                   </div>
                 </form>

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_BASE_URL } from "../../config/apiConfig";
+import { toast } from "react-toastify";
 import {
   REGISTER_FAILURE,
   REGISTER_REQUEST,
@@ -36,8 +37,10 @@ export const register = (userdata) => async (dispatch) => {
     );
     const user = respone.data;
     dispatch(registerSuccess(user));
+    toast.success("Đăng kí thành công");
   } catch (error) {
     dispatch(registerFailure(error.message));
+    toast.warn("Đăng kí thất bại");
   }
 };
 
@@ -49,11 +52,12 @@ export const login = (userdata) => async (dispatch) => {
       userdata
     );
     const user = respone.data;
-    console.log(user.token);
     localStorage.setItem("jwt", user.token);
     dispatch(loginSuccess(user));
+    toast.success("Đăng nhập thành công");
   } catch (error) {
     dispatch(loginFailure(error.message));
+    toast.warn("Đăng nhập thất bại");
   }
 };
 
@@ -75,5 +79,6 @@ export const getUser = () => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
   dispatch({ type: LOG_OUT, payload: null });
+  toast.success("Bạn đã đăng xuât khỏi tài khoản");
   localStorage.clear();
 };

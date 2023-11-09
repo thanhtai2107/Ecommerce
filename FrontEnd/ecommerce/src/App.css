@@ -344,6 +344,9 @@ footer .input-group-text {
   overflow: hidden;
   width: 100%;
 }
+.product-card:hover {
+  cursor: pointer;
+}
 .product-card .wishlist {
   top: 6px;
   right: 17px;
@@ -951,3 +954,10 @@ footer .input-group-text {
   font-weight: 400;
 }
 /* New product end */
+
+/* Order detail begin*/
+.order-detail-wrapper {
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+  padding: 25px 5px;
+}
+/* Order detail end*/

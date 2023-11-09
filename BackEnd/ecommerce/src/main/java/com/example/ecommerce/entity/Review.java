@@ -18,6 +18,7 @@ public class Review {
     private Long id;
 
     private String review;
+    private int numRate;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

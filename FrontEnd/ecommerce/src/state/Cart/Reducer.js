@@ -53,16 +53,12 @@ export const cartReducers = (state = initialState, action) => {
         ...state,
         isloading: false,
         error: null,
-        cartItems: state.cartItems.filter((item) => item.id !== action.payload),
       };
     case UPDATE_CART_ITEM_SUCCESS:
       return {
         ...state,
         isloading: false,
         error: false,
-        cartItems: state.cartItems.map((item) =>
-          item.id === action.payload.id ? action.payload : item
-        ),
       };
     case REMOVE_CART_ITEM_FAILURE:
     case UPDATE_CART_ITEM_FAILURE:

@@ -75,7 +75,7 @@ function Search() {
   useEffect(() => {
     const data = {
       title: title === null ? "" : title,
-      size: 2,
+      size: 8,
       page: currentPage - 1,
       sortList: sort === null ? "" : sort,
       sortDirection: direction === null ? "" : direction,

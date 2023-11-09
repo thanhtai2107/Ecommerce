@@ -8,7 +8,7 @@ import {
   findAllProduct,
   findProductByTitle,
 } from "../../../state/Product/Action";
-
+import EditIcon from "@mui/icons-material/Edit";
 function ProductList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -16,6 +16,23 @@ function ProductList() {
 
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
+    {
+      field: "imgs",
+      headerName: "Hình ảnh",
+      width: 70,
+      renderCell: (params) => {
+        return (
+          <div>
+            <img
+              className="img-fluid"
+              src={params.row.imgs[0]}
+              alt="img"
+              style={{ width: "40px", height: "40px", borderRadius: "50%" }}
+            />
+          </div>
+        );
+      },
+    },
     { field: "title", headerName: "Tên sản phẩm", width: 130 },
     { field: "description", headerName: "Mô tả", width: 130 },
     {
@@ -26,7 +43,13 @@ function ProductList() {
     },
     {
       field: "quantity",
-      headerName: "Quantity",
+      headerName: "Số lượng",
+      type: "number",
+      width: 90,
+    },
+    {
+      field: "sold",
+      headerName: "Đã bán",
       type: "number",
       width: 90,
     },
@@ -38,7 +61,7 @@ function ProductList() {
       renderCell: (params) => {
         return (
           <>
-            <span>{params.row.category.name}</span>
+            <span>{params.row.category?.name}</span>
           </>
         );
       },
@@ -57,20 +80,12 @@ function ProductList() {
                 color="success"
                 size="small"
                 variant="contained"
+                startIcon={<EditIcon />}
                 onClick={() =>
                   navigate(`/admin/updateproduct/${params.row.id}`)
                 }
               >
                 Update
-              </Button>
-
-              <Button
-                color="error"
-                variant="contained"
-                size="small"
-                onClick={(e) => handleDelete(params.row.id)}
-              >
-                Delete
               </Button>
             </div>
           </>
@@ -78,11 +93,6 @@ function ProductList() {
       },
     },
   ];
-  const handleDelete = (productId) => {
-    dispatch(deleteProduct(productId));
-    dispatch(findAllProduct());
-  };
-
   useEffect(() => {
     dispatch(findAllProduct());
   }, []);
@@ -118,7 +128,7 @@ function ProductList() {
   } else {
     return (
       <>
-        <div className="product-list-wrapper">
+        <div className="product-list-wrapper py-4">
           <div>
             <Link to="/admin/addProduct">
               <Button variant="contained">Thêm sản phẩm</Button>

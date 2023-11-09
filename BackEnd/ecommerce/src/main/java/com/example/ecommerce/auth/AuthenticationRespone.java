@@ -1,5 +1,6 @@
 package com.example.ecommerce.auth;
 
+import com.example.ecommerce.dto.UserDTO;
 import com.example.ecommerce.entity.User;
 import lombok.*;
 
