@@ -90,7 +90,7 @@ function OrderHistory() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { auth } = useSelector((store) => store);
-  console.log(auth.jwt.user.id);
+  console.log(auth?.jwt?.user?.id);
   const { order } = useSelector((store) => store);
   console.log("user order", order.orders);
 
@@ -99,7 +99,7 @@ function OrderHistory() {
     dispatch(getOrdersByUser(auth?.jwt?.user?.id));
   };
   useEffect(() => {
-    const data = auth.jwt.user.id;
+    const data = auth?.jwt?.user?.id;
     dispatch(getOrdersByUser(data));
   }, []);
   return (

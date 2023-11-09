@@ -16,7 +16,6 @@ public class UserDTOMapper implements Function<User, UserDTO> {
                 .id(user.getId())
                 .fullname(user.getFullname())
                 .email(user.getEmail())
-                .address(convertAddress(user.getAddress()))
                 .phone(user.getPhone())
                 .role(user.getRole().toString())
                 .build();

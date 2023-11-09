@@ -7,8 +7,14 @@ import {
   ProductionQuantityLimits,
   Reorder,
 } from "@mui/icons-material";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { logout } from "../../state/auth/Action";
 function Sidebar() {
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+  };
   return (
     <>
       <div className="sidebar-main-wrapper ps-1">
@@ -66,17 +72,17 @@ function Sidebar() {
           <div>
             <h6>Service</h6>
             <div className="mt-2">
-              <div>
+              {/* <div>
                 <Link className="item-wrapper d-flex align-items-center gap-1 ps-2 py-1 text-dark">
                   <AccountBox className="icon" />
                   <p>Thông tin cá nhân</p>
                 </Link>
-              </div>
+              </div> */}
               <div>
-                <Link className="item-wrapper d-flex align-items-center gap-1 ps-2 py-1 text-dark">
+                <div className="item-wrapper d-flex align-items-center gap-1 ps-2 py-1 text-dark">
                   <Logout className="icon" />
-                  <p>Đăng xuất</p>
-                </Link>
+                  <p onClick={handleLogout}>Đăng xuất</p>
+                </div>
               </div>
             </div>
           </div>

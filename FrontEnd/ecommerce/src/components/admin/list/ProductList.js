@@ -9,7 +9,6 @@ import {
   findProductByTitle,
 } from "../../../state/Product/Action";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 function ProductList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -62,7 +61,7 @@ function ProductList() {
       renderCell: (params) => {
         return (
           <>
-            <span>{params.row.category.name}</span>
+            <span>{params.row.category?.name}</span>
           </>
         );
       },
@@ -129,7 +128,7 @@ function ProductList() {
   } else {
     return (
       <>
-        <div className="product-list-wrapper">
+        <div className="product-list-wrapper py-4">
           <div>
             <Link to="/admin/addProduct">
               <Button variant="contained">Thêm sản phẩm</Button>

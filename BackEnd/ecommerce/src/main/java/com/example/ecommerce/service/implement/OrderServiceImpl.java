@@ -65,7 +65,7 @@ public class OrderServiceImpl implements OrderService {
                         .fullname(createOrderReq.getFullname())
                         .email(createOrderReq.getEmail())
                         .phone(createOrderReq.getPhone())
-                        .shippingAddress(createOrderReq.getStreet() + "/b" + createOrderReq.getWard() + "/b" + createOrderReq.getDistrict() + "/b" + createOrderReq.getProvince())
+                        .shippingAddress(createOrderReq.getStreet() + "/n" + createOrderReq.getWard() + "/n" + createOrderReq.getDistrict() + "/n" + createOrderReq.getProvince())
                         .orderItems(orderItemList)
                         .orderStatus("PENDING")
                         .totalPrice(cart.totalPrice())

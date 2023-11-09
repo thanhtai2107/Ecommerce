@@ -4,7 +4,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getCart } from "../state/Cart/Action";
+import { getCart, removeCartItem } from "../state/Cart/Action";
 function Cart() {
   const navigate = useNavigate();
   const { cart } = useSelector((store) => store);
@@ -14,6 +14,10 @@ function Cart() {
   const dispatch = useDispatch();
   console.log(cart.cart);
 
+  const handleDeleteCartItem = (cartItemId) => {
+    dispatch(removeCartItem(cartItemId, userId));
+    dispatch(getCart(userId));
+  };
   useEffect(() => {
     dispatch(getCart(userId));
   }, [userId]);
@@ -61,7 +65,10 @@ function Cart() {
                             />
                           </div>
                           <div>
-                            <AiFillDelete className="delete" />
+                            <AiFillDelete
+                              onClick={() => handleDeleteCartItem(item.id)}
+                              className="delete"
+                            />
                           </div>
                         </div>
                         <div className="cart-col-4">

@@ -63,7 +63,7 @@ function Login() {
                   <div>
                     <input
                       type="password"
-                      placeholder="Password"
+                      placeholder="Mật khẩu"
                       className="form-control"
                       name="password"
                     />

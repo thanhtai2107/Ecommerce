@@ -13,7 +13,7 @@ import { checkExpired } from "../service";
 function SingleProduct() {
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
-  const [numRate, setNumRate] = useState(5);
+  const [numRate, setNumRate] = useState(0);
   const [reviews, setReview] = useState("");
   const dispatch = useDispatch();
   const { productId } = useParams();
@@ -43,8 +43,8 @@ function SingleProduct() {
     }
   };
 
-  const handleCreateReview = (e) => {
-    e.preventDefault();
+  const handleCreateReview = (event) => {
+    event.preventDefault();
     const data = {
       productId: productId,
       numRate: numRate,
@@ -53,10 +53,10 @@ function SingleProduct() {
     };
     if (auth?.jwt && checkExpired(auth?.jwt?.token)) {
       dispatch(createReview(data));
-      dispatch(getReviews(productId));
     } else {
       navigate("/login");
     }
+    setReview("");
   };
   useEffect(() => {
     dispatch(findProductById(productId));
@@ -242,7 +242,7 @@ function SingleProduct() {
                   <h4>Viết đánh giá</h4>
                   <form
                     action=""
-                    onSubmit={(e) => handleCreateReview(e)}
+                    onSubmit={(event) => handleCreateReview(event)}
                     className="d-flex flex-column gap-15"
                   >
                     <div>
@@ -260,6 +260,7 @@ function SingleProduct() {
                     </div>
                     <div>
                       <textarea
+                        value={reviews}
                         cols={4}
                         className="form-control"
                         placeholder="Comment"
@@ -273,27 +274,26 @@ function SingleProduct() {
                   </form>
                 </div>
                 <div className="reviews">
-                  {review?.reviews.length > 0 &&
-                    review?.reviews.map((item) => {
-                      return (
-                        <div className="review mt-3">
-                          <div className="d-flex align-items-center gap-10">
-                            <h6 className="mb-0">{item.user.fullname}</h6>
-                            <ReactStars
-                              count={5}
-                              value={item.numRate}
-                              size={24}
-                              isHalf={false}
-                              emptyIcon={<i className="far fa-star"></i>}
-                              halfIcon={<i className="fa fa-star-half-alt"></i>}
-                              fullIcon={<i className="fa fa-star"></i>}
-                              activeColor="#ffd700"
-                            />
-                          </div>
-                          <p>{item.review}</p>
+                  {review?.reviews.map((item) => {
+                    return (
+                      <div className="review mt-3">
+                        <div className="d-flex align-items-center gap-10">
+                          <h6 className="mb-0">{item.user.fullname}</h6>
+                          <ReactStars
+                            count={5}
+                            value={item.numRate}
+                            size={24}
+                            isHalf={false}
+                            emptyIcon={<i className="far fa-star"></i>}
+                            halfIcon={<i className="fa fa-star-half-alt"></i>}
+                            fullIcon={<i className="fa fa-star"></i>}
+                            activeColor="#ffd700"
+                          />
                         </div>
-                      );
-                    })}
+                        <p>{item.review}</p>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>

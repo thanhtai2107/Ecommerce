@@ -14,6 +14,7 @@ function SingleOrder() {
   const dispatch = useDispatch();
   const { orderId } = useParams();
   const { order } = useSelector((store) => store);
+  console.log("hellloooooo", order?.order?.orderItemDTOList);
   useEffect(() => {
     dispatch(getOrder(orderId));
   }, []);

@@ -26,12 +26,12 @@ function Register() {
       fullname: data.get("fullname"),
       email: data.get("email"),
       password: data.get("password"),
-      address: {
-        street: data.get("street"),
-        ward: selectedWard,
-        district: selectedDistrict,
-        province: selectedProvince,
-      },
+      // address: {
+      //   street: data.get("street"),
+      //   ward: selectedWard,
+      //   district: selectedDistrict,
+      //   province: selectedProvince,
+      // },
       phone: data.get("phone"),
     };
     dispatch(register(userData));
@@ -98,8 +98,8 @@ function Register() {
   }, [selectedDistrict, districtCode]);
   return (
     <>
-      <Meta title="Create An Account"></Meta>
-      <BreadCrumb title="Create An Account"></BreadCrumb>
+      <Meta title="Tạo tài khoản"></Meta>
+      <BreadCrumb title="Tạo tài khoản"></BreadCrumb>
       <div className="login-wrapper home-wrapper-2 py-5">
         <div className="container-xl">
           <div className="row">
@@ -110,7 +110,7 @@ function Register() {
                   <div className="py-2">
                     <input
                       type="text"
-                      placeholder="Fullname"
+                      placeholder="Họ và tên"
                       className="form-control"
                       id="fullname"
                       name="fullname"
@@ -120,35 +120,33 @@ function Register() {
                   <div>
                     <input
                       type="password"
-                      placeholder="Password"
+                      placeholder="Mật khẩu"
                       className="form-control"
                       id="password"
                       name="password"
                     />
                   </div>
 
-                  <div className="w-100 d-flex gap-10">
-                    <div className="py-2">
-                      <input
-                        type="email"
-                        placeholder="Email"
-                        className="form-control"
-                        id="email"
-                        name="email"
-                      />
-                    </div>
-                    <div className="py-2">
-                      <input
-                        type="text"
-                        placeholder="Phone"
-                        className="form-control"
-                        id="phone"
-                        name="phone"
-                      />
-                    </div>
+                  <div className="py-2">
+                    <input
+                      type="email"
+                      placeholder="Email"
+                      className="form-control"
+                      id="email"
+                      name="email"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Số điện thoại"
+                      className="form-control"
+                      id="phone"
+                      name="phone"
+                    />
                   </div>
 
-                  <div className="flex-grow-1">
+                  {/* <div className="flex-grow-1">
                     <select
                       value={selectedProvince}
                       name=""
@@ -209,7 +207,7 @@ function Register() {
                       placeholder="Số nhà, đường, khu phố"
                       name="street"
                     />
-                  </div>
+                  </div> */}
 
                   <div className="d-flex gap-10 justify-content-center align-items-center mt-3">
                     <button type="submit" className="button border-0">

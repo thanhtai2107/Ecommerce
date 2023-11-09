@@ -47,15 +47,6 @@ public class AuthenticationService {
                 .build();
 
         User userSaved =userRepository.save(user);
-        Address addressSaved = addressRepository.save(Address.builder()
-                .street(request.getAddress().getStreet())
-                .ward(request.getAddress().getWard())
-                .district(request.getAddress().getDistrict())
-                .province(request.getAddress().getProvince())
-                .user(userSaved)
-                .build()
-        );
-        userSaved.setAddress(addressSaved);
         cartService.createCart(user);
         return new AuthenticationRespone("", null);
     }

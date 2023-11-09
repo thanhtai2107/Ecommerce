@@ -17,4 +17,11 @@ public class CategoryServiceImpl implements CategoryService {
     public Cate findByName(String categoryName) {
         return categoryRepository.findCateByName(categoryName);
     }
+
+    @Override
+    public Cate updateCategory(Long categoryId, String name) {
+        Cate category = categoryRepository.findCateById(categoryId);
+        category.setName(name);
+        return categoryRepository.save(category);
+    }
 }

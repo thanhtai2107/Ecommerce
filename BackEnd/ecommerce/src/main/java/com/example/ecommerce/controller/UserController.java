@@ -48,8 +48,8 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/cart/deleteItem/{id}")
-    public ResponseEntity<?> deleteCartItem(@PathVariable Long id, @RequestParam Long userId) throws CartItemException, UserException {
+    @DeleteMapping("/cart/{userId}/deleteItem/{id}")
+    public ResponseEntity<?> deleteCartItem(@PathVariable Long id, @PathVariable Long userId) throws CartItemException, UserException {
         return ResponseEntity.ok(cartItemService.deleteCartItem(id, userId));
     }
 

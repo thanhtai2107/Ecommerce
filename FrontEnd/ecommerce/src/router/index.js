@@ -1,10 +1,13 @@
 import Layout from "../components/Layout";
 import AdminLayout from "../components/admin/AdminLayout";
+import CategoryList from "../components/admin/list/CategoryList";
 import OrderList from "../components/admin/list/OrderList";
 import ProductList from "../components/admin/list/ProductList";
 import UserList from "../components/admin/list/UserList";
+import NewCategory from "../components/admin/new/NewCategory";
 import NewProduct from "../components/admin/new/NewProduct";
 import OrderSingle from "../components/admin/single/OrderSingle";
+import UpdateCategory from "../components/admin/update/UpdateCategory";
 import UpdateProduct from "../components/admin/update/UpdateProduct";
 import About from "../pages/About";
 import Admin from "../pages/Admin";
@@ -118,7 +121,25 @@ export const routes = [
   },
   {
     path: "/admin/categorylist",
+    component: CategoryList,
+    layout: AdminLayout,
+    private: PrivateRoute,
+  },
+  {
+    path: "/admin/addCategory",
+    component: NewCategory,
+    layout: AdminLayout,
+    private: PrivateRoute,
+  },
+  {
+    path: "/admin/updateCategory",
     component: UserList,
+    layout: AdminLayout,
+    private: PrivateRoute,
+  },
+  {
+    path: "/admin/updatecategory/:categoryId",
+    component: UpdateCategory,
     layout: AdminLayout,
     private: PrivateRoute,
   },

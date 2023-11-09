@@ -48,11 +48,11 @@ export const addItemToCart = (reqData) => async (dispatch) => {
   }
 };
 
-export const removeCartItem = (reqData) => async (dispatch) => {
+export const removeCartItem = (cartItemId, userId) => async (dispatch) => {
   dispatch({ type: REMOVE_CART_ITEM_REQUEST });
   try {
     const data = await axios.delete(
-      `${API_BASE_URL}/api/v1/cart/deleteItem/${reqData.cartItemId}`,
+      `${API_BASE_URL}/api/v1/cart/${userId}/deleteItem/${cartItemId}`,
       authHeader()
     );
     dispatch({ type: REMOVE_CART_ITEM_SUCCESS, payload: data });

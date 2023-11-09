@@ -32,8 +32,6 @@ public class ProductDTOMapper implements Function<Product, ProductDTO> {
                 )
         ;
     }
-
-
     public Product toProduct(ProductDTO productDTO) {
         return Product.builder()
                 .title(productDTO.title())
